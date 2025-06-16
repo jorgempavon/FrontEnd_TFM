@@ -30,6 +30,12 @@ export class LoginComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
+    this.loginForm.get('email')?.valueChanges.subscribe(() =>{
+      this.errorMessage = '';
+    });
+    this.loginForm.get('password')?.valueChanges.subscribe(() =>{
+      this.errorMessage = '';
+    });
   }
 
   login(): void {
@@ -57,9 +63,8 @@ export class LoginComponent {
 
   processLoginResponse(responseDto:ResponseDto):void{
     if(responseDto.status == 401){
-      let bodyErrorDto:BodyErrorDto = responseDto.body as BodyErrorDto; 
-      this.errorMessage = bodyErrorDto.message;
       this.loginForm.patchValue({ password: '' });
+      this.errorMessage =  'El correo o contraseña proporcionados son incorrectos';
       return;
     }
     let sessionDto: SessionDTO  =  responseDto.body as SessionDTO 

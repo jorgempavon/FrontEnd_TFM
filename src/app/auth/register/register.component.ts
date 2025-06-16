@@ -28,9 +28,36 @@ export class RegisterComponent {
       dni: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       name: ['', Validators.required],
-      lastName: ['', Validators.required],
+      lastName: [''],
       password: ['', Validators.required],
       repeatPassword: ['', Validators.required]
+    });
+  }
+
+  clearMessages():void{
+    this.registerForm.get('dni')?.valueChanges.subscribe(() =>{
+      this.errorMessage = '';
+      this.successMessage = '';
+    });
+    this.registerForm.get('name')?.valueChanges.subscribe(() =>{
+      this.errorMessage = '';
+      this.successMessage = '';
+    });
+    this.registerForm.get('lastName')?.valueChanges.subscribe(() =>{
+      this.errorMessage = '';
+      this.successMessage = '';
+    });
+    this.registerForm.get('email')?.valueChanges.subscribe(() =>{
+      this.errorMessage = '';
+      this.successMessage = '';
+    });
+    this.registerForm.get('password')?.valueChanges.subscribe(() =>{
+      this.errorMessage = '';
+      this.successMessage = '';
+    });
+    this.registerForm.get('repeatPassword')?.valueChanges.subscribe(() =>{
+      this.errorMessage = '';
+      this.successMessage = '';
     });
   }
 
@@ -63,7 +90,9 @@ export class RegisterComponent {
 
   processRegisterResponse(responseDto:ResponseDto):void{
     if(responseDto.status != 201){
-      this.proccessRegisterErrors(responseDto.body as BodyErrorDto);
+      let bodyErrorDto: BodyErrorDto = responseDto.body as BodyErrorDto;
+      this.registerForm.patchValue({ password: '' ,repeatPassword:''});
+      this.errorMessage = bodyErrorDto.message;
       return;
     }
     this.successMessage = 'Usuario registrado correctamente';
@@ -71,12 +100,7 @@ export class RegisterComponent {
   }
 
   proccessRegisterErrors(bodyError:BodyErrorDto):void{
-    if(bodyError.statusCode == 400){
-      this.errorMessage = bodyError.message;
-      this.registerForm.patchValue({ password: '' ,repeatPassword:''});
-    }else if(bodyError.statusCode == 409){
-      this.errorMessage = bodyError.message;
-      this.registerForm.patchValue({ password: '' ,repeatPassword:''});
-    }
+
+
   }
 }

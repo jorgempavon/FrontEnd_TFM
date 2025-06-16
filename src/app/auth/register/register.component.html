@@ -1,7 +1,12 @@
-<main class="main-login w-100 m-auto">
-    <form [formGroup]="registerForm" (ngSubmit)="register()" class="form-login">
+<main class="main-register  w-100 m-auto">
+    <form [formGroup]="registerForm" (ngSubmit)="register()" class="form-register">
     <h1 class="h3 mb-3 fw-normal">Registro</h1> 
-    
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3" role="alert">
+      {{ errorMessage }}
+    </div>
+    <div *ngIf="successMessage" class="alert alert-success mt-3" role="alert">
+      {{ successMessage }}
+    </div>
     <div class="form-floating mb-3"> 
         <input type="text" formControlName="name" class="form-control" id="floatingInput" placeholder="Escribe tu nombre" required> 
         <label for="floatingInput">Nombre</label> 
@@ -32,7 +37,7 @@
     <button class="btn btn-primary w-100 py-2 mt-4" type="submit" [disabled]="registerForm.invalid">Registrarse</button> 
     
     <div class="text-center mt-3">
-        <p>¿Ya tienes cuenta? <a routerLink="/bibliokie/register">Inicia sesión aquí</a></p>
+        <p>¿Ya tienes cuenta? <a routerLink="/bibliokie/auth/login">Inicia sesión aquí</a></p>
     </div>
 
     <p class="mt-5 mb-3 text-body-secondary">© 2025 - Coded by Jorge Muñoz Pavón</p> 
