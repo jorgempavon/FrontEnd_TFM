@@ -6,21 +6,14 @@ const routes: Routes = [
     path: 'bibliokie',
     children: [
       {
-        path: '',
-        redirectTo: 'customer',
-        pathMatch: 'full'
-      },
+        path: 'auth',
+        loadChildren: () =>
+          import('./auth/auth.module').then(m => m.AuthModule)
+      }
     ]
   },
-  {
-    path: '',
-    redirectTo: 'bibliokie',
-    pathMatch: 'full'
-  },
-  {
-    path: '**',
-    redirectTo: 'bibliokie'
-  }
+  { path: '', redirectTo: 'bibliokie/auth/login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'bibliokie/auth/login' }
 ];
 
 @NgModule({
