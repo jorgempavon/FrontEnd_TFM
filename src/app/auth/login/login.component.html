@@ -1,5 +1,5 @@
 <main class="main-login w-100 m-auto">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-login">
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="form-login">
     <h1 class="h3 mb-3 fw-normal">Inicio de sesión</h1> 
 
     <div class="form-floating mb-3"> 
@@ -20,4 +20,5 @@
 
     <p class="mt-5 mb-3 text-body-secondary">© 2025 - Coded by Jorge Muñoz Pavón</p> 
     </form>
+    <app-spinner></app-spinner>
 </main>
