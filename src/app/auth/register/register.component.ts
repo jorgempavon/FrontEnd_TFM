@@ -32,9 +32,10 @@ export class RegisterComponent {
       password: ['', Validators.required],
       repeatPassword: ['', Validators.required]
     });
+    this.clearMessagesAfterChange();
   }
 
-  clearMessages():void{
+  clearMessagesAfterChange():void{
     this.registerForm.get('dni')?.valueChanges.subscribe(() =>{
       this.errorMessage = '';
       this.successMessage = '';
@@ -95,12 +96,7 @@ export class RegisterComponent {
       this.errorMessage = bodyErrorDto.message;
       return;
     }
-    this.successMessage = 'Usuario registrado correctamente';
     this.registerForm.patchValue({ dni:'', email:'', name:'', lastName:'' ,password: '' ,repeatPassword:''});
-  }
-
-  proccessRegisterErrors(bodyError:BodyErrorDto):void{
-
-
+    this.successMessage = 'Usuario registrado correctamente';
   }
 }
