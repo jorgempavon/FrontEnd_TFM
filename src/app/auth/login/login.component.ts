@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { ResponseDto } from '../../shared/dtos/reponseDto';
 import { SessionDTO } from '../../shared/dtos/sessionDto';
 import { environment } from 'src/environment/environment';
+import { BodyErrorDto } from 'src/app/shared/dtos/bodyErrorDto';
 
 @Component({
   selector: 'app-login',
@@ -28,6 +29,12 @@ export class LoginComponent {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
+    });
+    this.loginForm.get('email')?.valueChanges.subscribe(() =>{
+      this.errorMessage = '';
+    });
+    this.loginForm.get('password')?.valueChanges.subscribe(() =>{
+      this.errorMessage = '';
     });
   }
 
@@ -56,8 +63,8 @@ export class LoginComponent {
 
   processLoginResponse(responseDto:ResponseDto):void{
     if(responseDto.status == 401){
-      this.errorMessage = "El email o contraseña proporcionados son incorrectos";
       this.loginForm.patchValue({ password: '' });
+      this.errorMessage =  'El correo o contraseña proporcionados son incorrectos';
       return;
     }
     let sessionDto: SessionDTO  =  responseDto.body as SessionDTO 
