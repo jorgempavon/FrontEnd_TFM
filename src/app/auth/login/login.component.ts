@@ -8,6 +8,7 @@ import { TokenService } from '../../core/services/token.service';
 import { Router } from '@angular/router';
 import { ResponseDto } from '../../shared/dtos/reponseDto';
 import { SessionDTO } from '../../shared/dtos/sessionDto';
+import { environment } from 'src/environment/environment';
 
 @Component({
   selector: 'app-login',
@@ -62,6 +63,12 @@ export class LoginComponent {
     let sessionDto: SessionDTO  =  responseDto.body as SessionDTO 
     this.tokenService.setToken(sessionDto.jwt);
     this.tokenService.setRole(sessionDto.isAdmin);
+
+    let role:string = 'client';
+    if(sessionDto.isAdmin){
+      role = 'admin';
+    }
+    this.router.navigate(['bibliokie/'+role+'/books']);
   }
 
 }
