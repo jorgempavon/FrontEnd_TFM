@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { ResponseDto } from '../../shared/dtos/reponseDto';
 import { SessionDTO } from '../../shared/dtos/sessionDto';
 import { environment } from 'src/environment/environment';
+import { BodyErrorDto } from 'src/app/shared/dtos/bodyErrorDto';
 
 @Component({
   selector: 'app-login',
@@ -56,7 +57,8 @@ export class LoginComponent {
 
   processLoginResponse(responseDto:ResponseDto):void{
     if(responseDto.status == 401){
-      this.errorMessage = "El email o contraseña proporcionados son incorrectos";
+      let bodyErrorDto:BodyErrorDto = responseDto.body as BodyErrorDto; 
+      this.errorMessage = bodyErrorDto.message;
       this.loginForm.patchValue({ password: '' });
       return;
     }
