@@ -1,3 +1,20 @@
-<app-header></app-header>
-<h1>Login</h1>
-<app-footer></app-footer>
+<main class="main-login w-100 m-auto">
+    <form class="form-login"> 
+        <h1 class="h3 mb-3 fw-normal">Inicio de sesión</h1> 
+        <div class="form-floating"> 
+            <input type="email" class="form-control" id="floatingInput" placeholder="Escribe tu email" required> 
+            <label for="floatingInput">Email address</label> 
+        </div> 
+        <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Escribe tu contraseña" required> 
+            <label for="floatingPassword">Password</label> 
+        </div> 
+
+        <button class="btn btn-primary w-100 py-2 mt-4" type="submit">Iniciar sesión</button> 
+        
+        <div class="text-center mt-3">
+            <p>¿No tienes cuenta? <a routerLink="/bibliokie/login">Regístrate aquí</a></p>
+        </div>
+        <p class="mt-5 mb-3 text-body-secondary">© 2025 - Coded by Jorge Muñoz Pavón </p> 
+    </form>
+</main>
