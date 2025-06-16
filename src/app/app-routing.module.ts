@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ClientGuard } from './core/guards/client.guard';
 import { AdminGuard } from './core/guards/admin.guard';
+import { RedirectComponent } from './core/components/redirect/redirect.component';
 
 const routes: Routes = [
   {
@@ -28,8 +29,8 @@ const routes: Routes = [
       }
     ]
   },
-  { path: '', redirectTo: 'bibliokie/auth/login', pathMatch: 'full' },
-  { path: '**', redirectTo: 'bibliokie/auth/login' }
+  { path: '', component:RedirectComponent },
+  { path: '**', component:RedirectComponent}
 ];
 
 @NgModule({
