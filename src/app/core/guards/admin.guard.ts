@@ -16,9 +16,7 @@ export class AdminGuard implements CanActivate {
 
     if (token && isAdmin) {
       return true;
-    }else if(token && !isAdmin){
-      return this.router.createUrlTree(['/client']); 
     }
-    return this.router.createUrlTree(['/login']); 
+    return this.router.createUrlTree(['']); 
   }
 }

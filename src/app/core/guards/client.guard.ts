@@ -17,9 +17,6 @@ export class ClientGuard implements CanActivate {
     if (token && !isAdmin) {
       return true;
     }
-    else if(token && isAdmin){
-      return this.router.createUrlTree(['/admin']);
-    }
-    return this.router.createUrlTree(['/login']);
+    return this.router.createUrlTree(['']);
   }
 }

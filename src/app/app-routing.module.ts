@@ -14,20 +14,21 @@ const routes: Routes = [
       },
       {
         path: 'client',
+        canActivate: [ClientGuard],
         loadChildren: () =>
-          import('./client/client.module').then(m => m.ClientModule),
-        canActivate: [ClientGuard]
+          import('./client/client.module').then(m => m.ClientModule)
+        
       },
       {
         path: 'admin',
+        canActivate: [AdminGuard],
         loadChildren: () =>
-          import('./admin/admin.module').then(m => m.AdminModule),
-        canActivate: [AdminGuard]
+          import('./admin/admin.module').then(m => m.AdminModule)
+        
       }
     ]
   },
   { path: '', redirectTo: 'bibliokie/auth/login', pathMatch: 'full' },
-  { path: 'admin/', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
   { path: '**', redirectTo: 'bibliokie/auth/login' }
 ];
 
