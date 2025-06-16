@@ -28,7 +28,7 @@ export class TokenService {
 
   getIsAdmin(): boolean {
     let isAdmin = false;
-    if(sessionStorage.getItem('role') && sessionStorage.getItem('token') == 'ADMIN'){
+    if(sessionStorage.getItem('role') && sessionStorage.getItem('role') == 'ADMIN'){
       isAdmin = true;
     }
     return isAdmin;
