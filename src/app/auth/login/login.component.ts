@@ -67,9 +67,11 @@ export class LoginComponent {
       this.errorMessage =  'El correo o contraseña proporcionados son incorrectos';
       return;
     }
-    let sessionDto: SessionDTO  =  responseDto.body as SessionDTO 
+    let sessionDto: SessionDTO  =  responseDto.body as SessionDTO;
     this.tokenService.setToken(sessionDto.jwt);
     this.tokenService.setRole(sessionDto.isAdmin);
+    this.tokenService.setId(sessionDto.id);
+    this.tokenService.setEmail(sessionDto.email);
 
     let role:string = 'client';
     if(sessionDto.isAdmin){

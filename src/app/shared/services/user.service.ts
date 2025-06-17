@@ -35,13 +35,14 @@ export class UserService {
   }
 
   findById(id:number): Observable<ResponseDto>{
-    return this.http.put<UserSelfUpdateDTO>(`${this.authUrl}/${id}`, null, { observe: 'response' })
+    return this.http.get<UserSelfUpdateDTO>(`${this.authUrl}/${id}`, { observe: 'response' })
       .pipe(
         map((response: HttpResponse<any>) => {
           let responseDto: ResponseDto = {
             status: response.status,
             body: response.body
           };
+          console.log(responseDto);
           return responseDto;
         }),
         catchError(error => {

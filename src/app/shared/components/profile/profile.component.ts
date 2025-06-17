@@ -6,6 +6,9 @@ import { Router } from '@angular/router';
 import { BodyErrorDto } from '../../dtos/bodyErrorDto';
 import { ResponseDto } from '../../dtos/reponseDto';
 import { UserSelfUpdateDTO } from '../../dtos/userSelfUpdateDto';
+import { DynamicFormField } from '../../dtos/dynamicFormField';
+import { UserService } from '../../services/user.service';
+import { UserDTO } from '../../dtos/userDto';
 
 @Component({
   selector: 'app-profile',
@@ -13,80 +16,95 @@ import { UserSelfUpdateDTO } from '../../dtos/userSelfUpdateDto';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
-    updateUserForm!: FormGroup;
-    errorMessage: string;
-    successMessage: string;
-  
-    constructor(private fb: FormBuilder,private spinnerService: SpinnerService,
-      private router: Router) {
-      this.errorMessage = '';
-      this.successMessage = '';
+  fields: DynamicFormField[] = [
+    { name: 'dni', label: 'DNI', type: 'text'},
+    { name: 'email', label: 'Email', type: 'email' },
+    { name: 'name', label: 'Nombre', type: 'text' },
+    { name: 'lastName', label: 'Apellidos', type: 'text' },
+        { name: 'oldPassword', label: 'Contraseña actual', type: 'password' },
+    { name: 'password', label: 'Contraseña', type: 'password' },
+    { name: 'repeatPassword', label: 'Confirmar Contraseña', type: 'password' }
+
+  ];
+  errorMessage: string;
+  successMessage: string;
+  form!:FormGroup;
+  id:number;
+
+  constructor(private fb: FormBuilder,private spinnerService: SpinnerService,
+    private router: Router, private userService:UserService, private tokenService:TokenService) {
+    this.errorMessage = '';
+    this.successMessage = '';
+    this.id = this.tokenService.getId(); 
+    
+  }
+
+  ngOnInit(): void {
+    this.spinnerService.show();
+    this.userService.findById(this.id).subscribe({
+      next: (responseDto) => {
+        this.spinnerService.hide();
+        this.processGetUserResponse(responseDto)
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+  }
+
+  updateUser(values: any): void {
+    this.spinnerService.show();
+    const userSelfUpdateDTO: UserSelfUpdateDTO = {
+      dni: values.dni,
+      email: values.email,
+      name: values.name,
+      lastName: values.lastName,
+      password: values.password,
+      repeatPassword: values.repeatPassword,
+      oldPassword: values.oldPassword
+    };
+
+    this.userService.updateSelf(userSelfUpdateDTO).subscribe({
+      next: (responseDto) => {
+        this.spinnerService.hide();
+        this.processUpdateUserResponse(responseDto)
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+  }
+
+  processGetUserResponse(responseDto:ResponseDto):void{
+    if(responseDto.status != 200){
+      let bodyErrorDto: BodyErrorDto = responseDto.body as BodyErrorDto;
+      this.errorMessage = bodyErrorDto.message;
+      return;
     }
-  
-    ngOnInit(): void {
-      this.updateUserForm = this.fb.group({
-        dni: ['', [Validators.required]],
-        email: ['', [Validators.required, Validators.email]],
-        name: ['', Validators.required],
-        lastName: [''],
-        password: ['', Validators.required],
-        repeatPassword: ['', Validators.required]
-      });
-      this.clearMessagesAfterChange();
+    let bodyReponse: UserDTO = responseDto.body as UserDTO;
+
+    this.form = this.fb.group({
+      dni: [bodyReponse.dni],
+      email: [bodyReponse.email],
+      name: [bodyReponse.name],
+      lastName: [bodyReponse.lastName],
+      oldPassword: [''],
+      password: [''],
+      repeatPassword: ['']
+    });
+  }
+
+  processUpdateUserResponse(responseDto:ResponseDto):void{
+    if(responseDto.status != 200){
+      let bodyErrorDto: BodyErrorDto = responseDto.body as BodyErrorDto;
+      this.errorMessage = bodyErrorDto.message;
+      return;
     }
-  
-    clearMessagesAfterChange():void{
-      this.updateUserForm.get('dni')?.valueChanges.subscribe(() =>{
-        this.errorMessage = '';
-        this.successMessage = '';
-      });
-      this.updateUserForm.get('name')?.valueChanges.subscribe(() =>{
-        this.errorMessage = '';
-        this.successMessage = '';
-      });
-      this.updateUserForm.get('lastName')?.valueChanges.subscribe(() =>{
-        this.errorMessage = '';
-        this.successMessage = '';
-      });
-      this.updateUserForm.get('email')?.valueChanges.subscribe(() =>{
-        this.errorMessage = '';
-        this.successMessage = '';
-      });
-      this.updateUserForm.get('password')?.valueChanges.subscribe(() =>{
-        this.errorMessage = '';
-        this.successMessage = '';
-      });
-      this.updateUserForm.get('repeatPassword')?.valueChanges.subscribe(() =>{
-        this.errorMessage = '';
-        this.successMessage = '';
-      });
-    }
-  
-    updateUser(): void {
-      if (!this.updateUserForm.valid) {
-        return;
-      }
-  
-      this.spinnerService.show();
-      const { dni,name,lastName, email, password,repeatPassword } = this.updateUserForm.value,
-      registerDto: UserSelfUpdateDTO = {
-        dni:dni,
-        email: email,
-        name: name,
-        lastName: lastName,
-        password: password,
-        repeatPassword:repeatPassword
-      };
-    }
-  
-    processRegisterResponse(responseDto:ResponseDto):void{
-      if(responseDto.status != 201){
-        let bodyErrorDto: BodyErrorDto = responseDto.body as BodyErrorDto;
-        this.updateUserForm.patchValue({ password: '' ,repeatPassword:''});
-        this.errorMessage = bodyErrorDto.message;
-        return;
-      }
-      this.updateUserForm.patchValue({ dni:'', email:'', name:'', lastName:'' ,password: '' ,repeatPassword:''});
-      this.successMessage = 'Usuario registrado correctamente';
-    }
+    this.successMessage = 'Usuario modificado correctamente';
+  }
+
+  deleteMessages():void{
+    this.successMessage = '';
+    this.errorMessage = '';
+  }
 }
