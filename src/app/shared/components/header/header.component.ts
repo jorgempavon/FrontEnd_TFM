@@ -10,9 +10,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  isUserAdmin:boolean = false;
 
   constructor(private authService:AuthService,private spinnerService:SpinnerService
     ,private tokenService:TokenService, private router:Router){
+      if(tokenService.getIsAdmin()){
+        this.isUserAdmin = true;
+      }
   }
 
   logOut(): void{
