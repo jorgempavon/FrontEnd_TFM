@@ -56,6 +56,26 @@ export class AuthService {
         })
       );
   }
+
+  logOut():Observable<ResponseDto>{
+    return this.http.post<SessionDTO>(`${this.authUrl}/logOut`, null, { observe: 'response' })
+      .pipe(
+        map((response: HttpResponse<any>) => {
+          let responseDto: ResponseDto = {
+            status: response.status,
+            body: response.body
+          };
+          return responseDto;
+        }),
+        catchError(error => {
+          let responseDto: ResponseDto = {
+            status: error.status,
+            body: error.error 
+          };
+          return of(responseDto);
+        })
+      );
+  }
 }
 
 

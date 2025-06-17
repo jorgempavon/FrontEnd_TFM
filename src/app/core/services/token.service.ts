@@ -34,7 +34,7 @@ export class TokenService {
     return isAdmin;
   }
 
-  logOut():void{
+  clearSession():void{
     sessionStorage.clear();
   }
 
