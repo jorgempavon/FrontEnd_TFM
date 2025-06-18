@@ -1,0 +1,15 @@
+.a-editProfile, .a-logOut{
+  font-size: 1.5rem;
+}
+
+.a-logOut:hover {
+  color: red;
+}
+
+.a-editProfile:hover {
+  color: #007bff;
+}
+
+.nav-header{
+    background-color: black !important;
+}

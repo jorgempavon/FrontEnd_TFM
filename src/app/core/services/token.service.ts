@@ -7,6 +7,26 @@ export class TokenService {
 
   constructor() { }
 
+  setId(id:number):void{
+    sessionStorage.setItem('id',id.toString());
+  }
+
+  getId():number{
+    if(!sessionStorage.getItem('id')){
+      return 0;
+    }
+    return Number(sessionStorage.getItem('id'));
+  }
+
+  setEmail(email:string):void{
+    sessionStorage.setItem('email',email);
+  }
+
+  getEmail():string{
+    const email = sessionStorage.getItem('email');
+    return email ?? '';
+  }
+
   setToken(token:string):void{
     sessionStorage.setItem('token',token);
   }
@@ -34,7 +54,7 @@ export class TokenService {
     return isAdmin;
   }
 
-  logOut():void{
+  clearSession():void{
     sessionStorage.clear();
   }
 
