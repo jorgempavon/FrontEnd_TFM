@@ -6,17 +6,14 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Libros</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+        <li class="nav-item" *ngFor="let nav of listNavs">
+          <a class="nav-link" [ngClass]="{ 'active': nav.isActive }" [href]="nav.href" [title]="nav.title">{{ nav.text }}</a>
         </li>
       </ul>
 
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class=" nav-link active a-editProfile" title="Editar Perfil" href="/bibliokie/client/profile">
+          <a class="nav-link active a-editProfile" title="Editar Perfil" [href]="profileUrl">
             <i class="bi bi-person-workspace"></i>
           </a>
         </li>

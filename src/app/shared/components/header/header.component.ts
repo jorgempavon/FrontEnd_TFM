@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AuthService } from '../../../auth/auth.service';
 import { SpinnerService } from '../../services/spinner.service';
 import { TokenService } from '../../../core/services/token.service';
 import { Router } from '@angular/router';
+import { DynamicNavLink } from '../../dtos/dynamicNavLink';
 
 @Component({
   selector: 'app-header',
@@ -11,6 +12,8 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
   isUserAdmin:boolean = false;
+  @Input() profileUrl!:string;
+  @Input() listNavs!:DynamicNavLink[];
 
   constructor(private authService:AuthService,private spinnerService:SpinnerService
     ,private tokenService:TokenService, private router:Router){

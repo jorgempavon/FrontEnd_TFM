@@ -21,4 +21,5 @@ import { AdminComponent } from './admin.component';
     RouterModule
   ]
 })
-export class AdminModule { }
+export class AdminModule {
+ }
