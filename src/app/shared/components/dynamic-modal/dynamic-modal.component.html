@@ -1,0 +1,32 @@
+<div class="modal fade" [id]="modalId" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h2 class="modal-title">{{ title }}</h2>
+        <button type="button" class="btn-close" (click)="close()" aria-label="Cerrar"></button>
+      </div>
+
+      <div class="modal-body">
+        <p [innerHTML]="body"></p>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          *ngFor="let btn of buttons"
+          type="button"
+          class="btn"
+          [ngClass]="{
+            'btn-primary': btn.type === 'primary',
+            'btn-secondary': btn.type === 'secondary',
+            'btn-danger': btn.type === 'danger'
+          }"
+          (click)="btn.action(); close()"
+        >
+          {{ btn.label }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

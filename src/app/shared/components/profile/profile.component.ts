@@ -21,7 +21,7 @@ export class ProfileComponent {
     { name: 'email', label: 'Email', type: 'email' },
     { name: 'name', label: 'Nombre', type: 'text' },
     { name: 'lastName', label: 'Apellidos', type: 'text' },
-        { name: 'oldPassword', label: 'Contraseña actual', type: 'password' },
+    { name: 'oldPassword', label: 'Contraseña actual', type: 'password' },
     { name: 'password', label: 'Contraseña', type: 'password' },
     { name: 'repeatPassword', label: 'Confirmar Contraseña', type: 'password' }
 
