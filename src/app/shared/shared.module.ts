@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
+import { DynamicModalComponent } from './components/dynamic-modal/dynamic-modal.component';
 
 
 @NgModule({
@@ -15,12 +16,15 @@ import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.com
     FooterComponent,
     SpinnerComponent,
     ProfileComponent,
-    DynamicFormComponent
+    DynamicFormComponent,
+    DynamicModalComponent
   ],
   exports: [
     HeaderComponent,
     FooterComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    DynamicModalComponent,
+    DynamicFormComponent
   ],
   imports: [
     MatProgressSpinnerModule,

@@ -10,12 +10,12 @@ import { ResponseDto } from '../dtos/reponseDto';
 })
 export class UserService {
 
-  private authUrl = environment.apiBaseUrl + '/users';
+  private userUrl = environment.apiBaseUrl + '/users';
   
   constructor(private http: HttpClient) { }
 
   updateSelf(userSelfUpdateDTO:UserSelfUpdateDTO): Observable<ResponseDto>{
-    return this.http.put<UserSelfUpdateDTO>(`${this.authUrl}/myself`, userSelfUpdateDTO, { observe: 'response' })
+    return this.http.put<UserSelfUpdateDTO>(`${this.userUrl}/myself`, userSelfUpdateDTO, { observe: 'response' })
       .pipe(
         map((response: HttpResponse<any>) => {
           let responseDto: ResponseDto = {
@@ -35,14 +35,13 @@ export class UserService {
   }
 
   findById(id:number): Observable<ResponseDto>{
-    return this.http.get<UserSelfUpdateDTO>(`${this.authUrl}/${id}`, { observe: 'response' })
+    return this.http.get<UserSelfUpdateDTO>(`${this.userUrl}/${id}`, { observe: 'response' })
       .pipe(
         map((response: HttpResponse<any>) => {
           let responseDto: ResponseDto = {
             status: response.status,
             body: response.body
           };
-          console.log(responseDto);
           return responseDto;
         }),
         catchError(error => {

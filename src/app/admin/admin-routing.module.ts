@@ -4,6 +4,7 @@ import { BookViewComponent } from '../client/books/book-view/book-view.component
 import { BooksViewComponent } from '../client/books/books-view/books-view.component';
 import { AdminComponent } from './admin.component';
 import { ProfileComponent } from '../shared/components/profile/profile.component';
+import { UsersviewComponent } from './users/usersview/usersview.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,11 @@ const routes: Routes = [
     children: [
       { path: 'book', component: BookViewComponent },
       { path: 'books', component: BooksViewComponent },
+      {
+        path: 'users',
+        loadChildren: () =>
+          import('./users/users.module').then(m => m.UsersModule)
+      },
       { path: 'profile', component: ProfileComponent },
       { path: '', redirectTo: 'books', pathMatch: 'full' },
       { path: '**', redirectTo: 'books', pathMatch: 'full' }

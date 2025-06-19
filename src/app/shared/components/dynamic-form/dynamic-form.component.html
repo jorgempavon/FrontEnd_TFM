@@ -7,14 +7,26 @@
 </div>
 <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()" class="dynamic-form">
   <div *ngFor="let field of fields" class="form-floating mb-3">
-    <input
+    <div *ngIf="field.type === 'checkbox'" class="form-check">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        [id]="field.name"
+        [formControlName]="field.name"
+      />
+      <label class="form-check-label" [for]="field.name">
+        {{ field.label }}
+      </label>
+    </div>
+    
+    <input *ngIf="field.type !== 'checkbox'" 
       [type]="field.type"
       [formControlName]="field.name"
       [id]="field.name"
       class="form-control"
       [placeholder]="field.placeholder || field.label"
     />
-    <label [for]="field.name">{{ field.label }}</label>
+    <label *ngIf="field.type !== 'checkbox'" [for]="field.name">{{ field.label }}</label>
 
   </div>
 

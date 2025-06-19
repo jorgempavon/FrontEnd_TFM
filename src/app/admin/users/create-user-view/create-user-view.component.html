@@ -1,12 +1,12 @@
 <div class="main-div  w-100 m-auto">
-  <h2>Editar perfil</h2>
+  <h2>Crear usuario</h2>
   <app-dynamic-form
     [fields]="fields"
     [errorMessage]="errorMessage"
     [successMessage]="successMessage"
     [form]="form"
-    [submitFn]="updateUser.bind(this)"
+    [submitFn]="createUser.bind(this)"
     (formTouched)="deleteMessages()"
-    submitButtonText="Actualizar usuario">
+    submitButtonText="Crear usuario">
   </app-dynamic-form>
 </div>
