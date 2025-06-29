@@ -3,7 +3,7 @@ import { SpinnerService } from '../../services/spinner.service';
 import { TokenService } from '../../../core/services/token.service';
 import { Router } from '@angular/router';
 import { DynamicNavLink } from '../../dtos/dynamicNavLink';
-import { UserService } from '../../services/user.service';
+import { UserSharedService } from '../../services/user-shared.service';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +15,7 @@ export class HeaderComponent {
   @Input() profileUrl!:string;
   @Input() listNavs!:DynamicNavLink[];
 
-  constructor(private userService:UserService,private spinnerService:SpinnerService
+  constructor(private userSharedService:UserSharedService,private spinnerService:SpinnerService
     ,private tokenService:TokenService, private router:Router){
       if(tokenService.getIsAdmin()){
         this.isUserAdmin = true;
@@ -24,7 +24,7 @@ export class HeaderComponent {
 
   logOut(): void{
     this.spinnerService.show();
-    this.userService.logOut().subscribe({
+    this.userSharedService.logOut().subscribe({
       next: () => {
         this.spinnerService.hide();
         this.tokenService.clearSession();

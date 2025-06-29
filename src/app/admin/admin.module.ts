@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { BookviewComponent } from './books/bookview/bookview.component';
 import { BooksviewComponent } from './books/booksview/booksview.component';
 import { AdminComponent } from './admin.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AdminComponent } from './admin.component';
     CommonModule,
     AdminRoutingModule,
     SharedModule,
-    RouterModule
+    RouterModule,
+    MatDialogModule
   ]
 })
 export class AdminModule {

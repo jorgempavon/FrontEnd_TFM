@@ -1,42 +1,43 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { DynamicFormField } from 'src/app/shared/dtos/dynamicFormField';
 import { SpinnerService } from 'src/app/shared/services/spinner.service';
 
 import { UserCreateDTO } from 'src/app/shared/dtos/userCreateDto';
 import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
 import { BodyErrorDto } from 'src/app/shared/dtos/bodyErrorDto';
-import { UserDTO } from 'src/app/shared/dtos/userDto';
-import { UserServiceAdmin } from '../userAdmin.service';
+import { AdminService } from '../admin.service';
+import { SharedModule } from "../../../shared/shared.module";
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create-user-view',
-  templateUrl: './create-user-view.component.html',
-  styleUrls: ['./create-user-view.component.css']
+  templateUrl: './create-admin-view.component.html',
+  styleUrls: ['./create-admin-view.component.css'],
+  standalone: true,
+  imports: [SharedModule] 
 })
-export class CreateUserViewComponent {
+
+export class CreateAdminViewComponent {
   fields: DynamicFormField[] = [
     { name: 'dni', label: 'DNI', type: 'text'},
     { name: 'email', label: 'Email', type: 'email' },
     { name: 'name', label: 'Nombre', type: 'text' },
-    { name: 'lastName', label: 'Apellidos', type: 'text' },
-    { name: 'isAdmin', label: '¿Es Administrador?', type: 'checkbox' }
+    { name: 'lastName', label: 'Apellidos', type: 'text' }
   ];
   errorMessage: string;
   successMessage: string;
   form!:FormGroup;
 
   constructor(private fb: FormBuilder,private spinnerService: SpinnerService,
-    private router: Router, private userServiceAdmin:UserServiceAdmin) {
+     private adminService:AdminService, private dialogRef: MatDialogRef<CreateAdminViewComponent>) {
     this.errorMessage = '';
     this.successMessage = '';
     this.form = this.fb.group({
       dni: '',
       email: '',
       name: '',
-      lastName: '',
-      isAdmin: false
+      lastName: ''
     });
   }
 
@@ -51,11 +52,10 @@ export class CreateUserViewComponent {
       dni: values.dni,
       email: values.email,
       name: values.name,
-      lastName: values.lastName,
-      isAdmin: values.isAdmin
+      lastName: values.lastName
     };
 
-    this.userServiceAdmin.create(userCreateDTO).subscribe({
+    this.adminService.create(userCreateDTO).subscribe({
       next: (responseDto) => {
         this.spinnerService.hide();
         this.processCreateUserResponse(responseDto)
@@ -76,10 +76,7 @@ export class CreateUserViewComponent {
       dni: [''],
       email: [''],
       name: [''],
-      lastName: [''],
-      oldPassword: [''],
-      password: [''],
-      repeatPassword: ['']
+      lastName: ['']
     });
     this.successMessage = 'Usuario creado correctamente';
   }
@@ -87,5 +84,9 @@ export class CreateUserViewComponent {
   deleteMessages():void{
     this.successMessage = '';
     this.errorMessage = '';
+  }
+
+  onClose():void{
+    this.dialogRef.close();
   }
 }

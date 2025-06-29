@@ -6,61 +6,21 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from 'src/environment/environment';
 import { UserCreateDTO } from 'src/app/shared/dtos/userCreateDto';
 import { UserAdminUpdateDto } from 'src/app/shared/dtos/userAdminUpdateDto';
-import { UserService } from 'src/app/shared/services/user.service';
+import { UserSharedService } from 'src/app/shared/services/user-shared.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserServiceAdmin {
+export class UserService {
 
   private userUrl = environment.apiBaseUrl + '/users';
 
-  constructor(private http: HttpClient, private userService:UserService) { }
+  constructor(private http: HttpClient, private userSharedService:UserSharedService) { }
 
 
   findByNameAndDniAndEmail(name:string,dni:string,email:string): Observable<ResponseDto>{
     const params = { name, dni, email };
     return this.http.get<UserDTO>(this.userUrl, { params,observe: 'response' })
-      .pipe(
-        map((response: HttpResponse<any>) => {
-          let responseDto: ResponseDto = {
-            status: response.status,
-            body: response.body
-          };
-          return responseDto;
-        }),
-        catchError(error => {
-          let responseDto: ResponseDto = {
-            status: error.status,
-            body: error.error 
-          };
-          return of(responseDto);
-        })
-      );
-  }
-
-  delete(id:number): Observable<ResponseDto>{
-    return this.http.delete<void>(this.userUrl+"/"+id.toString(), {observe: 'response'})
-      .pipe(
-        map((response: HttpResponse<any>) => {
-          let responseDto: ResponseDto = {
-            status: response.status,
-            body: null
-          };
-          return responseDto;
-        }),
-        catchError(error => {
-          let responseDto: ResponseDto = {
-            status: error.status,
-            body: error.error 
-          };
-          return of(responseDto);
-        })
-      );
-  }
-
-  create(userCreateDTO:UserCreateDTO): Observable<ResponseDto>{
-    return this.http.post<UserDTO>(this.userUrl,userCreateDTO, {observe: 'response'})
       .pipe(
         map((response: HttpResponse<any>) => {
           let responseDto: ResponseDto = {
@@ -100,6 +60,6 @@ export class UserServiceAdmin {
   }
 
   findById(id:number):Observable<ResponseDto>{
-    return this.userService.findById(id);
+    return this.userSharedService.findById(id);
   }
 }

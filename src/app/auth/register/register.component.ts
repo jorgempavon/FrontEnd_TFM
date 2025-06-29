@@ -6,8 +6,8 @@ import { Router } from '@angular/router';
 import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
 import { RegisterDto } from 'src/app/shared/dtos/registerDto';
 import { BodyErrorDto } from '../../shared/dtos/bodyErrorDto';
-import { UserService } from 'src/app/shared/services/user.service';
 import { DynamicFormField } from 'src/app/shared/dtos/dynamicFormField';
+import { ClientSharedService } from 'src/app/shared/services/client-shared.service';
 
 @Component({
   selector: 'app-register',
@@ -28,7 +28,7 @@ export class RegisterComponent {
   form!:FormGroup;
 
   constructor(private fb: FormBuilder,private spinnerService: SpinnerService,
-    private userService: UserService,private tokenService:TokenService,private router: Router) {
+    private clientSharedService: ClientSharedService,private tokenService:TokenService,private router: Router) {
       this.form = this.fb.group({
       dni: '',
       email: '',
@@ -52,7 +52,7 @@ export class RegisterComponent {
       repeatPassword:repeatPassword
     };
     
-    this.userService.register(registerDto).subscribe({
+    this.clientSharedService.register(registerDto).subscribe({
       next: (responseDto) => {
         this.spinnerService.hide();
         this.processRegisterResponse(responseDto)

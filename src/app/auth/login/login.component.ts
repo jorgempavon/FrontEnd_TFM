@@ -7,7 +7,7 @@ import { TokenService } from '../../core/services/token.service';
 import { Router } from '@angular/router';
 import { ResponseDto } from '../../shared/dtos/reponseDto';
 import { SessionDTO } from '../../shared/dtos/sessionDto';
-import { UserService } from 'src/app/shared/services/user.service';
+import { UserSharedService } from 'src/app/shared/services/user-shared.service';
 import { DynamicFormField } from 'src/app/shared/dtos/dynamicFormField';
 
 @Component({
@@ -27,7 +27,7 @@ export class LoginComponent {
   id!:number;
 
   constructor(private fb: FormBuilder,private spinnerService: SpinnerService,
-    private userService: UserService,private tokenService:TokenService,private router: Router) {
+    private userSharedService: UserSharedService,private tokenService:TokenService,private router: Router) {
       this.form = this.fb.group({
         email: '',
         password: ''
@@ -42,7 +42,7 @@ export class LoginComponent {
       password: password
     };
     
-    this.userService.login(loginDto).subscribe({
+    this.userSharedService.login(loginDto).subscribe({
       next: (responseDto) => {
         this.spinnerService.hide();
         this.processLoginResponse(responseDto)
@@ -61,12 +61,12 @@ export class LoginComponent {
     }
     let sessionDto: SessionDTO  =  responseDto.body as SessionDTO;
     this.tokenService.setToken(sessionDto.jwt);
-    this.tokenService.setRole(sessionDto.isAdmin);
+    this.tokenService.setRol(sessionDto.rol);
     this.tokenService.setId(sessionDto.id);
     this.tokenService.setEmail(sessionDto.email);
-
+    console.log(sessionDto.rol);
     let role:string = 'client';
-    if(sessionDto.isAdmin){
+    if(sessionDto.rol == 'admin'){
       role = 'admin';
     }
     this.router.navigate(['bibliokie/'+role+'/books']);
