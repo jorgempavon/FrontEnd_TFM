@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SpinnerService } from 'src/app/shared/services/spinner.service';
-import { AuthService } from '../auth.service';
 import { TokenService } from 'src/app/core/services/token.service';
 import { Router } from '@angular/router';
 import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
 import { RegisterDto } from 'src/app/shared/dtos/registerDto';
 import { BodyErrorDto } from '../../shared/dtos/bodyErrorDto';
+import { UserService } from 'src/app/shared/services/user.service';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -18,7 +19,7 @@ export class RegisterComponent {
   successMessage: string;
 
   constructor(private fb: FormBuilder,private spinnerService: SpinnerService,
-    private authService: AuthService,private tokenService:TokenService,private router: Router) {
+    private userService: UserService,private tokenService:TokenService,private router: Router) {
     this.errorMessage = '';
     this.successMessage = '';
   }
@@ -78,7 +79,7 @@ export class RegisterComponent {
       repeatPassword:repeatPassword
     };
     
-    this.authService.register(registerDto).subscribe({
+    this.userService.register(registerDto).subscribe({
       next: (responseDto) => {
         this.spinnerService.hide();
         this.processRegisterResponse(responseDto)

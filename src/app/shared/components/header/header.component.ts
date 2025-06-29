@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { AuthService } from '../../../auth/auth.service';
 import { SpinnerService } from '../../services/spinner.service';
 import { TokenService } from '../../../core/services/token.service';
 import { Router } from '@angular/router';
 import { DynamicNavLink } from '../../dtos/dynamicNavLink';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +15,7 @@ export class HeaderComponent {
   @Input() profileUrl!:string;
   @Input() listNavs!:DynamicNavLink[];
 
-  constructor(private authService:AuthService,private spinnerService:SpinnerService
+  constructor(private userService:UserService,private spinnerService:SpinnerService
     ,private tokenService:TokenService, private router:Router){
       if(tokenService.getIsAdmin()){
         this.isUserAdmin = true;
@@ -24,7 +24,7 @@ export class HeaderComponent {
 
   logOut(): void{
     this.spinnerService.show();
-    this.authService.logOut().subscribe({
+    this.userService.logOut().subscribe({
       next: () => {
         this.spinnerService.hide();
         this.tokenService.clearSession();

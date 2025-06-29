@@ -2,14 +2,13 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SpinnerService } from 'src/app/shared/services/spinner.service';
 
-import { AuthService } from '../auth.service';
 import { LoginDto } from 'src/app/shared/dtos/loginDto';
 import { TokenService } from '../../core/services/token.service';
 import { Router } from '@angular/router';
 import { ResponseDto } from '../../shared/dtos/reponseDto';
 import { SessionDTO } from '../../shared/dtos/sessionDto';
-import { environment } from 'src/environment/environment';
-import { BodyErrorDto } from 'src/app/shared/dtos/bodyErrorDto';
+import { UserService } from 'src/app/shared/services/user.service';
+import { DynamicFormField } from 'src/app/shared/dtos/dynamicFormField';
 
 @Component({
   selector: 'app-login',
@@ -17,40 +16,33 @@ import { BodyErrorDto } from 'src/app/shared/dtos/bodyErrorDto';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  loginForm!: FormGroup;
-  errorMessage: string;
+  fields: DynamicFormField[] = [
+    { name: 'email', label: 'Email', type: 'email' },
+    { name: 'password', label: 'Contraseña', type: 'password' },
+
+  ];
+  errorMessage:string = '';
+  successMessage:string = '';
+  form!:FormGroup;
+  id!:number;
 
   constructor(private fb: FormBuilder,private spinnerService: SpinnerService,
-    private authService: AuthService,private tokenService:TokenService,private router: Router) {
-    this.errorMessage = '';
-  }
-
-  ngOnInit(): void {
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
-    });
-    this.loginForm.get('email')?.valueChanges.subscribe(() =>{
-      this.errorMessage = '';
-    });
-    this.loginForm.get('password')?.valueChanges.subscribe(() =>{
-      this.errorMessage = '';
+    private userService: UserService,private tokenService:TokenService,private router: Router) {
+      this.form = this.fb.group({
+      email: '',
+      password: ''
     });
   }
 
   login(): void {
-    if (!this.loginForm.valid) {
-      return;
-    }
-
     this.spinnerService.show();
-    const { email, password } = this.loginForm.value,
+    const { email, password } = this.form.value,
     loginDto: LoginDto = {
       email: email,
       password: password
     };
     
-    this.authService.login(loginDto).subscribe({
+    this.userService.login(loginDto).subscribe({
       next: (responseDto) => {
         this.spinnerService.hide();
         this.processLoginResponse(responseDto)
@@ -63,7 +55,7 @@ export class LoginComponent {
 
   processLoginResponse(responseDto:ResponseDto):void{
     if(responseDto.status == 401){
-      this.loginForm.patchValue({ password: '' });
+      this.form.patchValue({ password: '' });
       this.errorMessage =  'El correo o contraseña proporcionados son incorrectos';
       return;
     }
@@ -80,4 +72,9 @@ export class LoginComponent {
     this.router.navigate(['bibliokie/'+role+'/books']);
   }
 
+  
+  deleteMessages():void{
+    this.successMessage = '';
+    this.errorMessage = '';
+  }
 }
