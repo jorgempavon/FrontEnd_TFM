@@ -77,7 +77,7 @@ export class UserService {
   }
 
   register(registerDto: RegisterDto): Observable<ResponseDto> {
-    return this.http.post<SessionDTO>(`${this.userUrl}/register`, registerDto, { observe: 'response' })
+    return this.http.post<SessionDTO>(`${this.userUrl}/client/register`, registerDto, { observe: 'response' })
       .pipe(
         map((response: HttpResponse<any>) => {
           let responseDto: ResponseDto = {
