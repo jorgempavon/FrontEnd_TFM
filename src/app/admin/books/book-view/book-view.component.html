@@ -1,0 +1,26 @@
+<div class="main-div  w-100 m-auto">
+
+
+  <div class="row">
+    <div class="col-6">
+      <div class="card h-800">
+        <img [src]="'https://covers.openlibrary.org/b/isbn/' +  isbnImage + '-L.jpg'" alt="Portada del libro" />
+        <button class="mt-2 btn btn-warning" (click)="openCreateBookingLoanModal()">Crear reserva</button>
+      </div>
+    </div>
+    <div class="col-6">
+      <h2>Editar libro </h2>
+      <app-dynamic-form
+        [fields]="fields"
+        [errorMessage]="errorMessage"
+        [successMessage]="successMessage"
+        [form]="form"
+        [submitFn]="updateBook.bind(this)"
+        (formTouched)="deleteMessages()"
+        submitButtonText="Modificar libro">
+      </app-dynamic-form>
+      
+    </div>
+  </div>
+
+</div>

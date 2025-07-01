@@ -6,6 +6,7 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { ResponseDto } from '../dtos/reponseDto';
 import { SessionDTO } from '../dtos/sessionDto';
 import { LoginDto } from '../dtos/loginDto';
+import { UserDTO } from '../dtos/userDto';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class UserSharedService {
   constructor(private http: HttpClient) { }
 
   updateSelf(userSelfUpdateDTO:UserSelfUpdateDTO): Observable<ResponseDto>{
-    return this.http.put<UserSelfUpdateDTO>(`${this.userUrl}/myself`, userSelfUpdateDTO, { observe: 'response' })
+    return this.http.put<UserDTO>(`${this.userUrl}/myself`, userSelfUpdateDTO, { observe: 'response' })
       .pipe(
         map((response: HttpResponse<any>) => {
           let responseDto: ResponseDto = {
@@ -37,7 +38,7 @@ export class UserSharedService {
   }
 
   findById(id:number): Observable<ResponseDto>{
-    return this.http.get<UserSelfUpdateDTO>(`${this.userUrl}/${id}`, { observe: 'response' })
+    return this.http.get<UserDTO>(`${this.userUrl}/${id}`, { observe: 'response' })
       .pipe(
         map((response: HttpResponse<any>) => {
           let responseDto: ResponseDto = {
@@ -55,7 +56,7 @@ export class UserSharedService {
         })
       );
   }
-    login(loginDto: LoginDto): Observable<ResponseDto> {
+  login(loginDto: LoginDto): Observable<ResponseDto> {
     return this.http.post<SessionDTO>(`${this.userUrl}/login`, loginDto, { observe: 'response' })
       .pipe(
         map((response: HttpResponse<any>) => {
@@ -76,7 +77,7 @@ export class UserSharedService {
   }
 
   logOut():Observable<ResponseDto>{
-    return this.http.post<SessionDTO>(`${this.userUrl}/logOut`, null, { observe: 'response' })
+    return this.http.post<void>(`${this.userUrl}/logOut`, null, { observe: 'response' })
       .pipe(
         map((response: HttpResponse<any>) => {
           let responseDto: ResponseDto = {

@@ -16,10 +16,10 @@ import { CreateClientViewComponent } from '../create-client-view/create-client-v
 
 @Component({
   selector: 'app-usersview',
-  templateUrl: './usersview.component.html',
-  styleUrls: ['./usersview.component.css']
+  templateUrl: './users-view.component.html',
+  styleUrls: ['./users-view.component.css']
 })
-export class UsersviewComponent {
+export class UsersViewComponent {
   page = 1;
   pageSize = 4;
   collectionSize!:number;
@@ -38,7 +38,8 @@ export class UsersviewComponent {
   editUserUrl:string = 'bibliokie/admin/users/userView/';
 
   constructor(private userService:UserService,private adminService:AdminService,
-    private clientService:ClientService,private spinnerService:SpinnerService, private dialog:MatDialog) {
+    private clientService:ClientService,private spinnerService:SpinnerService,
+    private dialog:MatDialog) {
 
   }
 

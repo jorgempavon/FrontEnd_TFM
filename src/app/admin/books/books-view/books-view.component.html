@@ -1,0 +1,56 @@
+<div class="row mt-4 centered-div" >
+	<div class="row minimized-80-div">
+		<div class="col-3">
+			<label for="filterTitle">Título</label>
+			<input [(ngModel)]="filterTitle" (ngModelChange)="getBooksList()"  type="text" class="form-control" id="filterTitle"/>
+		</div>
+		<div class="col-3">
+			<label for="filterAuthor">Autor</label>
+			<input [(ngModel)]="filterAuthor" (ngModelChange)="getBooksList()"  type="text" class="form-control" id="filterAuthor"/>
+		</div>
+		<div class="col-3">
+			<label for="filterIsbn">ISBN</label>
+			<input [(ngModel)]="filterIsbn" (ngModelChange)="getBooksList()"   type="text" class="form-control" id="filterName"/>
+		</div>
+		
+	<div class="col-3">
+			<label for="filterGenre">Género</label>
+			<input [(ngModel)]="filterGenre" (ngModelChange)="getBooksList()"   type="text" class="form-control" id="filterGenre"/>
+		</div>
+		
+	</div>
+	<div class="row mt-4  minimized-80-div">
+		<div class="col-2">
+			<button (click)="openCreateBookModal()" class="btn btn-primary"><i class="bi bi-person-fill-add"></i> Añadir libro</button>
+		</div>
+		<div class="col-10">
+		</div>
+	</div>
+</div>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-3 mb-4" *ngFor="let book of books">
+      <div class="card h-100">
+        <img [src]="'https://covers.openlibrary.org/b/isbn/' + book.isbn + '-L.jpg'" alt="Portada del libro" />
+
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ book.title }}</h5>
+          <p class="card-text">{{ book.author }}</p>
+          <p class="card-text">{{ book.stock }} unidades disponibles </p>
+          <p class="card-text text-muted">{{ book.genre}}...</p>
+          <div class="mt-auto">
+            <a [attr.href]="'/bibliokie/admin/books/bookview/' + book.id"  class="btn btn-primary w-100 mb-1">Ver detalles</a>
+			 <button class="btn btn-danger w-100 mb-1" (click)="openDeleteModal(book.id,book.title,book.author)">Eliminar libro</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-dynamic-modal
+[title]="modalTitle"
+[body]="modalBody"
+[buttons]="modalButtons"
+modalId="myModal"
+></app-dynamic-modal>

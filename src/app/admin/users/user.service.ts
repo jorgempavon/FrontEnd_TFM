@@ -40,7 +40,7 @@ export class UserService {
   }
 
   update(id:number,userAdminUpdateDto:UserAdminUpdateDto): Observable<ResponseDto>{
-    return this.http.put<UserAdminUpdateDto>(`${this.userUrl}/${id}`, userAdminUpdateDto, { observe: 'response' })
+    return this.http.put<UserDTO>(`${this.userUrl}/${id}`, userAdminUpdateDto, { observe: 'response' })
       .pipe(
         map((response: HttpResponse<any>) => {
           let responseDto: ResponseDto = {

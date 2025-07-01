@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { UsersRoutingModule } from './users-routing.module';
-import { UsersviewComponent } from './usersview/usersview.component';
+import { UsersViewComponent } from './users-view/users-view.component';
 import { FormsModule } from '@angular/forms';
 import { NgbTypeaheadModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { TableSortableDirective } from 'src/app/shared/directives/table-sortable.directive';
@@ -13,7 +13,7 @@ import { CreateClientViewComponent } from './create-client-view/create-client-vi
 
 @NgModule({
   declarations: [
-    UsersviewComponent,
+    UsersViewComponent,
     UserViewComponent,
     CreateClientViewComponent
   ],

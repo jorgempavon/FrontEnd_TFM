@@ -1,26 +1,27 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, DecimalPipe } from '@angular/common';
-
+import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './admin-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
-import { BookviewComponent } from './books/bookview/bookview.component';
-import { BooksviewComponent } from './books/booksview/booksview.component';
 import { AdminComponent } from './admin.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
-    BookviewComponent,
-    BooksviewComponent,
-    AdminComponent,
+    AdminComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     SharedModule,
     RouterModule,
-    MatDialogModule
+    MatDialogModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatFormFieldModule
   ]
 })
 export class AdminModule {
