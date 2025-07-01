@@ -7,7 +7,7 @@ import { BodyErrorDto } from '../../dtos/bodyErrorDto';
 import { ResponseDto } from '../../dtos/reponseDto';
 import { UserSelfUpdateDTO } from '../../dtos/userSelfUpdateDto';
 import { DynamicFormField } from '../../dtos/dynamicFormField';
-import { UserService } from '../../services/user.service';
+import { UserSharedService } from '../../services/user-shared.service';
 import { UserDTO } from '../../dtos/userDto';
 
 @Component({
@@ -32,7 +32,7 @@ export class ProfileComponent {
   id:number;
 
   constructor(private fb: FormBuilder,private spinnerService: SpinnerService,
-    private router: Router, private userService:UserService, private tokenService:TokenService) {
+    private router: Router, private userSharedService:UserSharedService, private tokenService:TokenService) {
     this.errorMessage = '';
     this.successMessage = '';
     this.id = this.tokenService.getId(); 
@@ -41,7 +41,7 @@ export class ProfileComponent {
 
   ngOnInit(): void {
     this.spinnerService.show();
-    this.userService.findById(this.id).subscribe({
+    this.userSharedService.findById(this.id).subscribe({
       next: (responseDto) => {
         this.spinnerService.hide();
         this.processGetUserResponse(responseDto)
@@ -64,7 +64,7 @@ export class ProfileComponent {
       oldPassword: values.oldPassword
     };
 
-    this.userService.updateSelf(userSelfUpdateDTO).subscribe({
+    this.userSharedService.updateSelf(userSelfUpdateDTO).subscribe({
       next: (responseDto) => {
         this.spinnerService.hide();
         this.processUpdateUserResponse(responseDto)

@@ -2,19 +2,24 @@ import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { TableSortableDirective } from 'src/app/shared/directives/table-sortable.directive';
 import { SortEvent } from 'src/app/shared/dtos/shortDto';
 import { UserDTO } from 'src/app/shared/dtos/userDto';
-import { UserServiceAdmin } from '../userAdmin.service';
+import { UserService } from '../user.service';
 import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
 import { BodyErrorDto } from 'src/app/shared/dtos/bodyErrorDto';
 import { DynamicModalComponent } from 'src/app/shared/components/dynamic-modal/dynamic-modal.component';
 import { ModalButton } from 'src/app/shared/dtos/modalButtonDto';
+import { ClientService } from '../client.service';
+import { AdminService } from '../admin.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateAdminViewComponent } from '../create-admin-view/create-admin-view.component';
+import { CreateClientViewComponent } from '../create-client-view/create-client-view.component';
 
 @Component({
   selector: 'app-usersview',
-  templateUrl: './usersview.component.html',
-  styleUrls: ['./usersview.component.css']
+  templateUrl: './users-view.component.html',
+  styleUrls: ['./users-view.component.css']
 })
-export class UsersviewComponent {
+export class UsersViewComponent {
   page = 1;
   pageSize = 4;
   collectionSize!:number;
@@ -30,10 +35,11 @@ export class UsersviewComponent {
   modalBody!:string;
   modalButtons!:ModalButton[];
 
-  createUserUrl:string = 'bibliokie/admin/users/createUser';
   editUserUrl:string = 'bibliokie/admin/users/userView/';
 
-  constructor(private userServiceAdmin:UserServiceAdmin, private spinnerService:SpinnerService) {
+  constructor(private userService:UserService,private adminService:AdminService,
+    private clientService:ClientService,private spinnerService:SpinnerService,
+    private dialog:MatDialog) {
 
   }
 
@@ -43,7 +49,7 @@ export class UsersviewComponent {
 
   getUsersList():void{
     this.spinnerService.show();
-	  this.userServiceAdmin.findByNameAndDniAndEmail(this.filterName,this.filterDni,this.filterEmail).subscribe({
+	  this.userService.findByNameAndDniAndEmail(this.filterName,this.filterDni,this.filterEmail).subscribe({
       next: (responseDto) => {
         this.spinnerService.hide();
         this.processGetUsersResponse(responseDto);
@@ -89,9 +95,9 @@ export class UsersviewComponent {
     }
   }
 
-  deleteUser(id:number):void{
+  deleteClient(id:number):void{
     this.spinnerService.show();
-    this.userServiceAdmin.delete(id).subscribe({
+    this.clientService.delete(id).subscribe({
       next: () => {
         this.spinnerService.hide();
         this.getUsersList();
@@ -102,13 +108,26 @@ export class UsersviewComponent {
     });
   }
 
-  openDeleteModal(id: number, name:string, lastName:string | undefined) {
+  deleteAdmin(id:number):void{
+    this.spinnerService.show();
+    this.adminService.delete(id).subscribe({
+      next: () => {
+        this.spinnerService.hide();
+        this.getUsersList();
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+  }
+
+  openDeleteModal(id: number, name:string, lastName:string | undefined,rol:string | undefined):void {
     this.modalBody = '¿Estas seguro de eliminar al usuario '+name+' '+ lastName+ ' de forma definitiva?';
     this.modalButtons = [
       {
         label: 'Eliminar',
         type: 'danger',
-        action: () => this.deleteUser(id)
+        action: () => (rol == "client" ? this.deleteClient(id):this.deleteAdmin(id)) 
       },
       {
         label: 'Cancelar',
@@ -118,6 +137,18 @@ export class UsersviewComponent {
     ];
 
     this.deleteModal.open();
+  }
+
+  openCreateAdminModal() {
+    this.dialog.open(CreateAdminViewComponent, {
+      width: '300px'
+    });
+  }
+
+  openCreateClientModal() {
+    this.dialog.open(CreateClientViewComponent, {
+      width: '300px'
+    });
   }
 
 }	

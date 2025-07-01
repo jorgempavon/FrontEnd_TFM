@@ -1,24 +1,24 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-
-import { catchError, map, Observable, of } from 'rxjs';
-import { SessionDTO } from '../shared/dtos/sessionDto';
-import { LoginDto } from '../shared/dtos/loginDto';
-import { ResponseDto } from '../shared/dtos/reponseDto';
+import { Injectable } from '@angular/core';
 import { environment } from 'src/environment/environment';
-import { RegisterDto } from '../shared/dtos/registerDto';
+import { UserSelfUpdateDTO } from '../dtos/userSelfUpdateDto';
+import { catchError, map, Observable, of } from 'rxjs';
+import { ResponseDto } from '../dtos/reponseDto';
+import { SessionDTO } from '../dtos/sessionDto';
+import { LoginDto } from '../dtos/loginDto';
+import { UserDTO } from '../dtos/userDto';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class UserSharedService {
 
-  private authUrl = environment.apiBaseUrl + '/authentication';
+  private userUrl = environment.apiBaseUrl + '/users';
   
   constructor(private http: HttpClient) { }
 
-  login(loginDto: LoginDto): Observable<ResponseDto> {
-    return this.http.post<SessionDTO>(`${this.authUrl}/login`, loginDto, { observe: 'response' })
+  updateSelf(userSelfUpdateDTO:UserSelfUpdateDTO): Observable<ResponseDto>{
+    return this.http.put<UserDTO>(`${this.userUrl}/myself`, userSelfUpdateDTO, { observe: 'response' })
       .pipe(
         map((response: HttpResponse<any>) => {
           let responseDto: ResponseDto = {
@@ -37,8 +37,27 @@ export class AuthService {
       );
   }
 
-  register(registerDto: RegisterDto): Observable<ResponseDto> {
-    return this.http.post<SessionDTO>(`${this.authUrl}/register`, registerDto, { observe: 'response' })
+  findById(id:number): Observable<ResponseDto>{
+    return this.http.get<UserDTO>(`${this.userUrl}/${id}`, { observe: 'response' })
+      .pipe(
+        map((response: HttpResponse<any>) => {
+          let responseDto: ResponseDto = {
+            status: response.status,
+            body: response.body
+          };
+          return responseDto;
+        }),
+        catchError(error => {
+          let responseDto: ResponseDto = {
+            status: error.status,
+            body: error.error 
+          };
+          return of(responseDto);
+        })
+      );
+  }
+  login(loginDto: LoginDto): Observable<ResponseDto> {
+    return this.http.post<SessionDTO>(`${this.userUrl}/login`, loginDto, { observe: 'response' })
       .pipe(
         map((response: HttpResponse<any>) => {
           let responseDto: ResponseDto = {
@@ -58,7 +77,7 @@ export class AuthService {
   }
 
   logOut():Observable<ResponseDto>{
-    return this.http.post<SessionDTO>(`${this.authUrl}/logOut`, null, { observe: 'response' })
+    return this.http.post<void>(`${this.userUrl}/logOut`, null, { observe: 'response' })
       .pipe(
         map((response: HttpResponse<any>) => {
           let responseDto: ResponseDto = {
@@ -77,5 +96,3 @@ export class AuthService {
       );
   }
 }
-
-

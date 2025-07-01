@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DynamicFormField } from 'src/app/shared/dtos/dynamicFormField';
-import { UserServiceAdmin } from '../userAdmin.service';
+import { UserService } from '../user.service';
 import { UserAdminUpdateDto } from '../../../shared/dtos/userAdminUpdateDto';
 import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
@@ -29,7 +29,7 @@ export class UserViewComponent {
   id!:number;
 
   constructor(private fb: FormBuilder,private router:Router,private route: ActivatedRoute, 
-  private userServiceAmin:UserServiceAdmin, private spinnerService:SpinnerService) {}
+  private userService:UserService, private spinnerService:SpinnerService) {}
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
@@ -43,7 +43,7 @@ export class UserViewComponent {
   }
 
   getUser():void{
-    this.userServiceAmin.findById(this.id).subscribe({
+    this.userService.findById(this.id).subscribe({
       next: (responseDto) => {
         this.spinnerService.hide();
         this.processGetUserResponse(responseDto)
@@ -63,7 +63,7 @@ export class UserViewComponent {
       isAdmin: values.isAdmin
     }
 
-    this.userServiceAmin.update(this.id,userAdminUpdateDto).subscribe({
+    this.userService.update(this.id,userAdminUpdateDto).subscribe({
       next: (responseDto) => {
         this.spinnerService.hide();
         this.processUpdateUserResponse(responseDto)
@@ -88,7 +88,7 @@ export class UserViewComponent {
       name: [bodyReponse.name],
       lastName: [bodyReponse.lastName],
       resetPassword:false,
-      isAdmin: [bodyReponse.isAdmin]
+      isAdmin: [bodyReponse.rol == 'admin' ? true:false ]
     });
   }
 

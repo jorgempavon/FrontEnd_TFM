@@ -36,19 +36,19 @@ export class TokenService {
     return token ?? '';
   }
 
-  setRole(isAdmin:boolean):void{
-    if(isAdmin){
-      sessionStorage.setItem('role','ADMIN');
+  setRol(rol:string):void{
+    if(rol == 'admin'){
+      sessionStorage.setItem('rol','ADMIN');
     }
     else{
-      sessionStorage.setItem('role','CLIENT');
+      sessionStorage.setItem('rol','CLIENT');
     }
     
   }
 
   getIsAdmin(): boolean {
     let isAdmin = false;
-    if(sessionStorage.getItem('role') && sessionStorage.getItem('role') == 'ADMIN'){
+    if(sessionStorage.getItem('rol') && sessionStorage.getItem('rol') == 'ADMIN'){
       isAdmin = true;
     }
     return isAdmin;

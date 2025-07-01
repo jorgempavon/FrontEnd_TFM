@@ -1,8 +1,5 @@
 .main-login {
     max-width: 330px;
     padding: 1rem;
-}
-
-.form-login {
-    margin-top: 30%;
+    margin-top: 5% !important;
 }
