@@ -1,41 +1,36 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { DynamicFormField } from 'src/app/shared/dtos/dynamicFormField';
 import { SpinnerService } from 'src/app/shared/services/spinner.service';
-
-import { UserCreateDTO } from 'src/app/shared/dtos/userCreateDto';
+import { BookingPeriodRuleService } from '../booking-period-rule.service';
 import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
 import { BodyErrorDto } from 'src/app/shared/dtos/bodyErrorDto';
-import { AdminService } from '../admin.service';
-import { SharedModule } from "../../../shared/shared.module";
-import { MatDialogRef } from '@angular/material/dialog';
+import { RuleCreateDTO } from 'src/app/shared/dtos/ruleCreateDto';
 
 @Component({
-  selector: 'app-create-user-view',
-  templateUrl: './create-admin-view.component.html',
-  styleUrls: ['./create-admin-view.component.css']
+  selector: 'app-create-booking-period-rule',
+  templateUrl: './create-booking-period-rule.component.html',
+  styleUrls: ['./create-booking-period-rule.component.css']
 })
-
-export class CreateAdminViewComponent {
+export class CreateBookingPeriodRuleComponent {
   fields: DynamicFormField[] = [
-    { name: 'dni', label: 'DNI', type: 'text'},
-    { name: 'email', label: 'Email', type: 'email' },
-    { name: 'name', label: 'Nombre', type: 'text' },
-    { name: 'lastName', label: 'Apellidos', type: 'text' }
+    { name: 'name', label: 'Nombre', type: 'text'},
+    { name: 'numPenalties', label: 'Número de penalizaciones', type: 'number' },
+    { name: 'days', label: 'Días de intervalo', type: 'number' }
   ];
   errorMessage: string;
   successMessage: string;
   form!:FormGroup;
 
   constructor(private fb: FormBuilder,private spinnerService: SpinnerService,
-     private adminService:AdminService, private dialogRef: MatDialogRef<CreateAdminViewComponent>) {
+     private bookingPeriodRuleService:BookingPeriodRuleService, private dialogRef: MatDialogRef<CreateBookingPeriodRuleComponent>) {
     this.errorMessage = '';
     this.successMessage = '';
     this.form = this.fb.group({
-      dni: '',
-      email: '',
       name: '',
-      lastName: ''
+      numPenalties: 0,
+      days: 0
     });
   }
 
@@ -44,19 +39,18 @@ export class CreateAdminViewComponent {
     this.spinnerService.hide();
   }
 
-  createUser(values: any): void {
+  createRule(values: any): void {
     this.spinnerService.show();
-    const userCreateDTO: UserCreateDTO = {
-      dni: values.dni,
-      email: values.email,
-      name: values.name,
-      lastName: values.lastName
+    const userCreateDTO: RuleCreateDTO = {
+      name: values.dni,
+      numPenalties: values.numPenalties,
+      days: values.days
     };
 
-    this.adminService.create(userCreateDTO).subscribe({
+    this.bookingPeriodRuleService.create(userCreateDTO).subscribe({
       next: (responseDto) => {
         this.spinnerService.hide();
-        this.processCreateUserResponse(responseDto)
+        this.processCreateRuleResponse(responseDto)
       },
       error: (error) => {
         console.error(error);
@@ -64,7 +58,7 @@ export class CreateAdminViewComponent {
     });
   }
 
-  processCreateUserResponse(responseDto:ResponseDto):void{
+  processCreateRuleResponse(responseDto:ResponseDto):void{
     if(responseDto.status != 201){
       let bodyErrorDto: BodyErrorDto = responseDto.body as BodyErrorDto;
       this.errorMessage = bodyErrorDto.message;
@@ -76,7 +70,7 @@ export class CreateAdminViewComponent {
       name: [''],
       lastName: ['']
     });
-    this.successMessage = 'Usuario creado correctamente';
+    this.successMessage = 'Regla creada correctamente';
   }
 
   deleteMessages():void{

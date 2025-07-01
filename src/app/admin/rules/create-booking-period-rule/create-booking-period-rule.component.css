@@ -1,8 +1,15 @@
 .main-div {
     max-width: 330px;
     padding: 1rem;
+    background-color: white;
 }
+
+.close-modal{
+    width: 92%;
+}
+
 
 .form-div {
     margin-top: 2%;
 }
+

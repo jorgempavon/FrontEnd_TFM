@@ -1,1 +1,12 @@
-<p>rule-view works!</p>
+<div class="main-div  w-100 m-auto">
+  <h2>Editar regla </h2>
+  <app-dynamic-form
+    [fields]="fields"
+    [errorMessage]="errorMessage"
+    [successMessage]="successMessage"
+    [form]="form"
+    [submitFn]="updateRule.bind(this)"
+    (formTouched)="deleteMessages()"
+    submitButtonText="Modificar regla">
+  </app-dynamic-form>
+</div>
