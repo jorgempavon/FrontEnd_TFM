@@ -64,20 +64,21 @@
 							</a>
 						</div>
 						<div class="col-3">
-							<a class="nav-link active iconDiv-size" title="Listar reservas" [href]="editListBookingLoansUrl+user.id">
-								<i class="bi bi-book text-success"></i>
-							</a>
-						</div>
-						<div class="col-3">
-							<a class="nav-link active iconDiv-size" title="Listar penalizaciones" href="#">
-								<i class="bi bi-exclamation-square-fill text-warning"></i>
-							</a>
-						</div>
-						<div class="col-3">
 							<a class="nav-link active iconDiv-size" title="Eliminar usuario" href="#" (click)="$event.preventDefault();openDeleteModal(user.id,user.name,user.lastName,user.rol)">
 								<i class="bi bi-trash text-danger"></i>
 							</a>
 						</div>
+						<div class="col-3" *ngIf="user.rol == 'client'">
+							<a class="nav-link active iconDiv-size"  title="Listar reservas" [href]="editListBookingLoansUrl+user.id">
+								<i class="bi bi-book text-success"></i>
+							</a>
+						</div>
+						<div class="col-3"  *ngIf="user.rol == 'client'">
+							<a class="nav-link active iconDiv-size" title="Listar penalizaciones" href="#">
+								<i class="bi bi-exclamation-square-fill text-warning"></i>
+							</a>
+						</div>
+
 					</div>
 				</td>
 			</tr>

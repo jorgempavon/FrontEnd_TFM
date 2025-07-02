@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { DynamicFormField } from 'src/app/shared/dtos/dynamicFormField';
 import { ClientService } from '../client.service';
 import { SpinnerService } from 'src/app/shared/services/spinner.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserCreateDTO } from 'src/app/shared/dtos/userCreateDto';
 import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
 import { BodyErrorDto } from 'src/app/shared/dtos/bodyErrorDto';
@@ -29,10 +29,10 @@ export class CreateClientViewComponent {
     this.errorMessage = '';
     this.successMessage = '';
     this.form = this.fb.group({
-      dni: '',
-      email: '',
-      name: '',
-      lastName: ''
+      dni: ['',Validators.required],
+      email: ['',Validators.required],
+      name: ['',Validators.required],
+      lastName: ['',Validators.required]
     });
   }
 

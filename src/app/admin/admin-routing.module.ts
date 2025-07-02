@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { ProfileComponent } from '../shared/components/profile/profile.component';
 import { BookingLoansViewComponent } from '../shared/components/booking-loans-view/booking-loans-view.component';
+import { BookingLoanViewComponent } from './bookingLoans/booking-loan-view/booking-loan-view.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,9 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent },
       {
         path: 'bookingLoansView/:userid',component:BookingLoansViewComponent
+      },
+      {
+        path: 'bookingLoanView/:id',component:BookingLoanViewComponent
       },
       { path: '**', redirectTo: 'books', pathMatch: 'full' },
       { path: '', redirectTo: 'books', pathMatch: 'full' },
