@@ -7,7 +7,7 @@ import { BookViewComponent } from './book-view/book-view.component';
 import { FormsModule } from '@angular/forms';
 import { CreateBookViewComponent } from './create-book-view/create-book-view.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { CreateBookingLoanViewComponent } from './create-booking-loan-view/create-booking-loan-view.component';
+import { CreateBookingLoanViewComponent } from '../bookingLoans/create-booking-loan-view/create-booking-loan-view.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';

@@ -5,6 +5,7 @@ import { environment } from 'src/environment/environment';
 import { ResponseDto } from '../dtos/reponseDto';
 import { BookingLoanCreateDTO } from '../dtos/bookingLoanCreateDTO';
 import { BookingLoanDTO } from '../dtos/bookingLoanDTO';
+import { BookingLoanUpdateDTO } from '../dtos/bookingLoanUpdateDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -62,6 +63,46 @@ export class BookingLoanService {
           let responseDto: ResponseDto = {
             status: response.status,
             body: null
+          };
+          return responseDto;
+        }),
+        catchError(error => {
+          let responseDto: ResponseDto = {
+            status: error.status,
+            body: error.error 
+          };
+          return of(responseDto);
+        })
+      );
+  }
+
+  findById(id:number): Observable<ResponseDto>{
+    return this.http.get<BookingLoanDTO>(`${this.bookingLoanUrl}/${id}`, { observe: 'response' })
+      .pipe(
+        map((response: HttpResponse<any>) => {
+          let responseDto: ResponseDto = {
+            status: response.status,
+            body: response.body
+          };
+          return responseDto;
+        }),
+        catchError(error => {
+          let responseDto: ResponseDto = {
+            status: error.status,
+            body: error.error 
+          };
+          return of(responseDto);
+        })
+      );
+  }
+
+  update(id:number,bookingLoanUpdateDto:BookingLoanUpdateDTO): Observable<ResponseDto>{
+    return this.http.put<BookingLoanDTO>(`${this.bookingLoanUrl}/${id}`, bookingLoanUpdateDto, { observe: 'response' })
+      .pipe(
+        map((response: HttpResponse<any>) => {
+          let responseDto: ResponseDto = {
+            status: response.status,
+            body: response.body
           };
           return responseDto;
         }),

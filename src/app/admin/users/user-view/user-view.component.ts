@@ -37,12 +37,13 @@ export class UserViewComponent {
       this.router.navigate(['bibliokie/admin/users']);
       return;
     }
-    this.spinnerService.show();
+    
     this.id = Number(id);
     this.getUser();
   }
 
   getUser():void{
+    this.spinnerService.show();
     this.userService.findById(this.id).subscribe({
       next: (responseDto) => {
         this.spinnerService.hide();
@@ -62,7 +63,7 @@ export class UserViewComponent {
       resetPassword: values.resetPassword,
       isAdmin: values.isAdmin
     }
-
+    this.spinnerService.show();
     this.userService.update(this.id,userAdminUpdateDto).subscribe({
       next: (responseDto) => {
         this.spinnerService.hide();

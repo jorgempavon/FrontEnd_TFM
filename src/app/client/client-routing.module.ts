@@ -4,6 +4,7 @@ import { BookViewComponent } from './books/book-view/book-view.component';
 import { BooksViewComponent } from './books/books-view/books-view.component';
 import { ProfileComponent } from '../shared/components/profile/profile.component';
 import { ClientComponent } from './client.component';
+import { BookingLoansViewComponent } from '../shared/components/booking-loans-view/booking-loans-view.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,9 @@ const routes: Routes = [
       { path: 'book', component: BookViewComponent },
       { path: 'books', component: BooksViewComponent },
       { path: 'profile', component: ProfileComponent},
+      {
+        path: 'bookingLoansView/:userid',component:BookingLoansViewComponent
+      },
       { path: '', redirectTo: 'books', pathMatch: 'full' },
       { path: '**', redirectTo: 'books', pathMatch: 'full' }
     ]

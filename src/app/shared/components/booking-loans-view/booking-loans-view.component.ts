@@ -34,7 +34,7 @@ export class BookingLoansViewComponent {
   modalTitle:string = 'Eliminar reserva';
   modalBody!:string;
   modalButtons!:ModalButton[];
-  editBookingLoanUrl: string = '/bibliokie/bookingloanView/';
+  editBookingLoanUrl: string = '/bibliokie/admin/bookingLoanView/';
   isAdmin!:boolean;
   
   constructor(private fb: FormBuilder,private router:Router,private route: ActivatedRoute, 

@@ -1,5 +1,5 @@
 <div class="row mt-4 centered-div" >
-	<div class="row minimized-83-div">
+	<div *ngIf="isAdmin"  class="row minimized-83-div">
 		<div class="col-2">
 			<label for="userSelect">Usuario</label>
 			<select disabled class="form-select" name="userSelect" id="userSelect">
@@ -7,6 +7,11 @@
             </select>
 		</div>
 	</div>
+
+	<div *ngIf="!isAdmin"  class="row minimized-83-div">
+		<h2>Mis reservas</h2>
+	</div>
+
     <div *ngIf="errorMessage" class="alert alert-danger mt-3 minimized-83-div" role="alert">
         {{ errorMessage }}
     </div>
@@ -30,10 +35,10 @@
 			<tr *ngFor="let bookingLoan of pagedListBookingLoans">
 				<th scope="row">{{ bookingLoan.id }}</th>
 				<td>
-					{{ bookingLoan.beginDate }}
+					{{ bookingLoan.beginDate | date: 'dd/MM/yyyy' }}
 				</td>
 				<td>
-					{{ bookingLoan.endDate }}
+					{{ bookingLoan.endDate | date: 'dd/MM/yyyy'  }}
 				</td>
                 <td>
 					{{ bookingLoan.collected  == true ? "Sí" : "No"}}

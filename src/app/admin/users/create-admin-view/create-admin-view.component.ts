@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DynamicFormField } from 'src/app/shared/dtos/dynamicFormField';
 import { SpinnerService } from 'src/app/shared/services/spinner.service';
 
@@ -32,10 +32,10 @@ export class CreateAdminViewComponent {
     this.errorMessage = '';
     this.successMessage = '';
     this.form = this.fb.group({
-      dni: '',
-      email: '',
-      name: '',
-      lastName: ''
+      dni: ['',Validators.required],
+      email: ['',Validators.required],
+      name: ['',Validators.required],
+      lastName: ['',Validators.required]
     });
   }
 

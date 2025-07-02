@@ -51,7 +51,7 @@ export class CreateBookViewComponent {
       isbn: values.isbn,
       title: values.title,
       stock: values.stock,
-      releaseDate: undefined,
+      releaseDate: values.releaseDate,
       genre: values.genre,
       author: values.author
     };

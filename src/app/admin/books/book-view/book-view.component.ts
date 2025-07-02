@@ -9,7 +9,7 @@ import { BodyErrorDto } from 'src/app/shared/dtos/bodyErrorDto';
 import { BookDTO } from 'src/app/shared/dtos/bookDTO';
 import { BookUpdateDTO } from 'src/app/shared/dtos/bookUpdateDTO';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateBookingLoanViewComponent } from '../create-booking-loan-view/create-booking-loan-view.component';
+import { CreateBookingLoanViewComponent } from '../../bookingLoans/create-booking-loan-view/create-booking-loan-view.component';
 
 @Component({
   selector: 'app-book-view',
@@ -41,12 +41,13 @@ export class BookViewComponent {
       this.router.navigate(['bibliokie/admin/books']);
       return;
     }
-    this.spinnerService.show();
+    
     this.id = Number(id);
     this.getBook();
   }
 
   getBook():void{
+    this.spinnerService.show();
     this.booksService.findById(this.id).subscribe({
       next: (responseDto) => {
         this.spinnerService.hide();
@@ -67,7 +68,7 @@ export class BookViewComponent {
       author: values.author,
       releaseDate: values.releaseDate
     };
-
+    this.spinnerService.show();
     this.booksService.update(this.id,bookUpdateDTO).subscribe({
       next: (responseDto) => {
         this.spinnerService.hide();
