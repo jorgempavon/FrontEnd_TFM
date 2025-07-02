@@ -57,7 +57,7 @@ export class RuleViewComponent {
       numPenalties: values.numPenalties,
       days: values.days
     }
-
+    this.spinnerService.show();
     this.ruleService.update(this.id,ruleUpdateDto).subscribe({
       next: (responseDto) => {
         this.spinnerService.hide();

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BodyErrorDto } from 'src/app/shared/dtos/bodyErrorDto';
 import { DynamicFormField } from 'src/app/shared/dtos/dynamicFormField';
 import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
@@ -31,11 +31,11 @@ export class CreateBookViewComponent {
     this.errorMessage = '';
     this.successMessage = '';
     this.form = this.fb.group({
-      isbn: '',
-      title: '',
-      stock: 1,
-      author: '',
-      genre: '',
+      isbn: ['',Validators.required],
+      title: ['',Validators.required],
+      stock: [1,Validators.required],
+      author: ['',Validators.required],
+      genre: ['',Validators.required],
       releaseDate: undefined
     });
   }

@@ -87,7 +87,7 @@ export class BookViewComponent {
     }
     let bodyReponse: BookDTO = responseDto.body as BookDTO;
     this.isbnImage = bodyReponse.isbn;
-    console.log(bodyReponse)
+    
     this.form = this.fb.group({
       isbn: [bodyReponse.isbn],
       title: [bodyReponse.title],

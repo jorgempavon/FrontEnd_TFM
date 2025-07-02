@@ -15,8 +15,8 @@ export class RulesService {
 
   constructor(private http: HttpClient) { }
 
-  findByNameAndNumMimPenalties(name:string,numMimPenalties:number): Observable<ResponseDto>{
-    const params = { name, numMimPenalties };
+  findByNameAndNumMimPenalties(name:string,minNumPenalties:number): Observable<ResponseDto>{
+    const params = { name, minNumPenalties };
     return this.http.get<RuleDTO>(this.rulesUrl, { params,observe: 'response' })
       .pipe(
         map((response: HttpResponse<any>) => {

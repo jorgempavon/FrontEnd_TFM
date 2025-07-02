@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DynamicFormField } from 'src/app/shared/dtos/dynamicFormField';
 import { SpinnerService } from 'src/app/shared/services/spinner.service';
@@ -28,9 +28,9 @@ export class CreateBookingPeriodRuleComponent {
     this.errorMessage = '';
     this.successMessage = '';
     this.form = this.fb.group({
-      name: '',
-      numPenalties: 0,
-      days: 0
+      name: ['',Validators.required],
+      numPenalties: [0,Validators.required],
+      days: [0,Validators.required]
     });
   }
 
@@ -42,7 +42,7 @@ export class CreateBookingPeriodRuleComponent {
   createRule(values: any): void {
     this.spinnerService.show();
     const userCreateDTO: RuleCreateDTO = {
-      name: values.dni,
+      name: values.name,
       numPenalties: values.numPenalties,
       days: values.days
     };
@@ -65,10 +65,9 @@ export class CreateBookingPeriodRuleComponent {
       return;
     }
     this.form = this.fb.group({
-      dni: [''],
-      email: [''],
-      name: [''],
-      lastName: ['']
+      name: ['',Validators.required],
+      numPenalties: [0,Validators.required],
+      days: [0,Validators.required]
     });
     this.successMessage = 'Regla creada correctamente';
   }
