@@ -30,12 +30,12 @@ export class RegisterComponent {
   constructor(private fb: FormBuilder,private spinnerService: SpinnerService,
     private clientSharedService: ClientSharedService,private tokenService:TokenService,private router: Router) {
       this.form = this.fb.group({
-      dni: '',
-      email: '',
-      name: '',
-      lastName: '',
-      password: '',
-      repeatPassword: ''
+      dni: ['',Validators.required],
+      email: ['',Validators.required],
+      name: ['',Validators.required],
+      lastName: ['',Validators.required],
+      password: ['',Validators.required],
+      repeatPassword: ['',Validators.required]
     });
   }
 

@@ -1,0 +1,92 @@
+<div class="row mt-4 centered-div" >
+	<div class="row minimized-83-div">
+		<div class="col-2">
+			<label for="userSelect">Usuario</label>
+			<select disabled class="form-select" name="userSelect" id="userSelect">
+                <option [ngValue]="userId">{{ userName }}</option>
+            </select>
+		</div>
+	</div>
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3 minimized-83-div" role="alert">
+        {{ errorMessage }}
+    </div>
+    <div *ngIf="successMessage" class="alert alert-success mt-3 minimized-83-div" role="alert">
+        {{ successMessage }}
+    </div>
+
+	<table class="table table-striped minimized-80-div mt-4" *ngIf="pagedListBookingLoans">
+		<thead>
+			<tr>
+				<th scope="col" sortable="id" (sort)="onSort($event)">#</th>
+				<th scope="col"  sortable="beginDate" (sort)="onSort($event)">Fecha inicio</th>
+				<th scope="col"  sortable="endDate" (sort)="onSort($event)">Fecha fin</th>
+				<th scope="col" sortable="collected" (sort)="onSort($event)">Recogido</th>
+				<th scope="col" sortable="returned" (sort)="onSort($event)">Devuelto</th>
+				<th scope="col" sortable="bookTitle" (sort)="onSort($event)">Libro</th>
+				<th scope="col">Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let bookingLoan of pagedListBookingLoans">
+				<th scope="row">{{ bookingLoan.id }}</th>
+				<td>
+					{{ bookingLoan.beginDate }}
+				</td>
+				<td>
+					{{ bookingLoan.endDate }}
+				</td>
+                <td>
+					{{ bookingLoan.collected  == true ? "Sí" : "No"}}
+				</td>
+				<td>
+					{{ bookingLoan.returned  == true ? "Sí" : "No"}}
+				</td>
+				<td>
+					{{ bookingLoan.bookTitle }}
+				</td>
+				<td>
+					<div class="row">
+						<div *ngIf="isAdmin" class="col-3">
+							<a class="nav-link active iconDiv-size" title="Editar reserva" [href]="editBookingLoanUrl+bookingLoan.id">
+								<i class="bi bi-pencil-square text-primary"></i>
+							</a>
+						</div>
+						<div class="col-3">
+							<a class="nav-link active iconDiv-size" title="Eliminar reserva" href="#" (click)="$event.preventDefault();openDeleteModal(bookingLoan.id,bookingLoan.bookTitle,bookingLoan.clientName)">
+								<i class="bi bi-trash text-danger"></i>
+							</a>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr *ngIf="pagedListBookingLoans.length == 0">
+				<td colspan="7" class="centered-text">
+					No se ha encontrado ninguna reserva para el usuario {{userName}}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div class="d-flex justify-content-between p-2 minimized-80-div">
+		<ngb-pagination *ngIf="pagedListBookingLoans"
+			[collectionSize]="collectionSize"
+			[(page)]="page"
+			[pageSize]="pageSize"
+			(pageChange)="refreshBookingLoansPagedList()"
+		>
+		</ngb-pagination>
+
+		<select class="form-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshBookingLoansPagedList()">
+			<option [ngValue]="2">2 items per page</option>
+			<option [ngValue]="4">4 items per page</option>
+			<option [ngValue]="6">6 items per page</option>
+		</select>
+	</div>
+
+	<app-dynamic-modal
+	[title]="modalTitle"
+	[body]="modalBody"
+	[buttons]="modalButtons"
+	modalId="myModal"
+	></app-dynamic-modal>
+</div>

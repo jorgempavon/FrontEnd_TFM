@@ -7,15 +7,16 @@ import { NgbTypeaheadModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootst
 import { TableSortableDirective } from 'src/app/shared/directives/table-sortable.directive';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { UserViewComponent } from './user-view/user-view.component';
-import { CreateAdminViewComponent } from './create-admin-view/create-admin-view.component';
 import { CreateClientViewComponent } from './create-client-view/create-client-view.component';
+import { CreateAdminViewComponent } from './create-admin-view/create-admin-view.component';
 
 
 @NgModule({
   declarations: [
     UsersViewComponent,
     UserViewComponent,
-    CreateClientViewComponent
+    CreateClientViewComponent,
+    CreateAdminViewComponent
   ],
   imports: [
     CommonModule,

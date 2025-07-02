@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ClientGuard } from './core/guards/client.guard';
 import { AdminGuard } from './core/guards/admin.guard';
 import { RedirectComponent } from './core/components/redirect/redirect.component';
+import { BookingLoansViewComponent } from './shared/components/booking-loans-view/booking-loans-view.component';
 
 const routes: Routes = [
   {

@@ -13,9 +13,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-create-user-view',
   templateUrl: './create-admin-view.component.html',
-  styleUrls: ['./create-admin-view.component.css'],
-  standalone: true,
-  imports: [SharedModule] 
+  styleUrls: ['./create-admin-view.component.css']
 })
 
 export class CreateAdminViewComponent {

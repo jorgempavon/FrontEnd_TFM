@@ -1,1 +1,100 @@
-<p>rules-view works!</p>
+<div class="row mt-4 centered-div" >
+	<div class="row minimized-83-div">
+		<div class="col-3">
+			<label for="filterName">Nombre</label>
+			<input [(ngModel)]="filterName" (ngModelChange)="getRulesList()"  type="text" class="form-control" id="filterName"/>
+		</div>
+		<div class="col-3">
+			<label for="filterNumPenalties">Número de penalizaciones</label>
+			<input [(ngModel)]="filterNumPenalties" (ngModelChange)="getRulesList()"  type="number" class="form-control" id="filterNumPenalties"/>
+		</div>
+	</div>
+
+	<div class="row mt-4  minimized-83-div">
+		<div class="col-3">
+			<button (click)="openCreateBookingRuleModal()" class="btn btn-primary"><i class="bi bi-person-fill-add"></i> Añadir regla de intervalo</button>
+		</div>
+		<div class="col-3">
+			<button (click)="openCreateTemporaryRuleModal()" class="btn btn-warning"><i class="bi bi-person-fill-add"></i> Añadir regla temporal</button>
+		</div>
+		
+		<div class="col-6">
+		</div>
+	</div>
+
+	<table class="table table-striped minimized-80-div mt-4" *ngIf="pagedListRules">
+		<thead>
+			<tr>
+				<th scope="col" sortable="id" (sort)="onSort($event)">#</th>
+				<th scope="col"  sortable="name" (sort)="onSort($event)">Nombre</th>
+				<th scope="col"  sortable="numPenalties" (sort)="onSort($event)">Nº penalizaciones</th>
+				<th scope="col" sortable="days" (sort)="onSort($event)">Días</th>
+				<th scope="col" sortable="type" (sort)="onSort($event)">Tipo</th>
+				<th scope="col" sortable="adminName" (sort)="onSort($event)">Creador</th>
+				<th scope="col">Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let rule of pagedListRules">
+				<th scope="row">{{ rule.id }}</th>
+				<td>
+					{{ rule.name }}
+				</td>
+				<td>
+					{{ rule.numPenalties }}
+				</td>
+				<td>
+					{{ rule.days }}
+				</td>
+				<td>
+					{{ rule.type }}
+				</td>
+				<td>
+					{{ rule.adminName }}
+				</td>
+				<td>
+					<div class="row">
+						<div class="col-3">
+							<a class="nav-link active iconDiv-size" title="Editar Regla" [href]="editRuleUrl+rule.id">
+								<i class="bi bi-pencil-square text-primary"></i>
+							</a>
+						</div>
+						<div class="col-3">
+							<a class="nav-link active iconDiv-size" title="Eliminar regla" href="#" (click)="$event.preventDefault();openDeleteModal(rule.id,rule.name,rule.adminName,rule.type)">
+								<i class="bi bi-trash text-danger"></i>
+							</a>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr *ngIf="pagedListRules.length == 0">
+				<td colspan="7" class="centered-text">
+					No se ha encontrado ninguna regla con los filtros establecidos
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div class="d-flex justify-content-between p-2 minimized-80-div">
+		<ngb-pagination *ngIf="pagedListRules"
+			[collectionSize]="collectionSize"
+			[(page)]="page"
+			[pageSize]="pageSize"
+			(pageChange)="refreshRulesPagedList()"
+		>
+		</ngb-pagination>
+
+		<select class="form-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshRulesPagedList()">
+			<option [ngValue]="2">2 items per page</option>
+			<option [ngValue]="4">4 items per page</option>
+			<option [ngValue]="6">6 items per page</option>
+		</select>
+	</div>
+
+	<app-dynamic-modal
+	[title]="modalTitle"
+	[body]="modalBody"
+	[buttons]="modalButtons"
+	modalId="myModal"
+	></app-dynamic-modal>
+</div>

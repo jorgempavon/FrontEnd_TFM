@@ -5,9 +5,12 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
 import { ProfileComponent } from './components/profile/profile.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { DynamicModalComponent } from './components/dynamic-modal/dynamic-modal.component';
+import { BookingLoansViewComponent } from './components/booking-loans-view/booking-loans-view.component';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { TableSortableDirective } from './directives/table-sortable.directive';
 
 
 @NgModule({
@@ -17,7 +20,8 @@ import { DynamicModalComponent } from './components/dynamic-modal/dynamic-modal.
     SpinnerComponent,
     ProfileComponent,
     DynamicFormComponent,
-    DynamicModalComponent
+    DynamicModalComponent,
+    BookingLoansViewComponent
   ],
   exports: [
     HeaderComponent,
@@ -29,7 +33,10 @@ import { DynamicModalComponent } from './components/dynamic-modal/dynamic-modal.
   imports: [
     MatProgressSpinnerModule,
     CommonModule,
-    ReactiveFormsModule 
+    ReactiveFormsModule,
+    NgbPaginationModule,
+    FormsModule,
+    TableSortableDirective
   ]
 })
 export class SharedModule { }
