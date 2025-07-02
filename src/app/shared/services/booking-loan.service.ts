@@ -33,5 +33,45 @@ export class BookingLoanService {
         })
       );
   }
+
+  findByUserId(userId:number):Observable<ResponseDto>{
+    const params = { userId };
+    return this.http.get<BookingLoanDTO>(this.bookingLoanUrl, { params,observe: 'response' })
+      .pipe(
+        map((response: HttpResponse<any>) => {
+          let responseDto: ResponseDto = {
+            status: response.status,
+            body: response.body
+          };
+          return responseDto;
+        }),
+        catchError(error => {
+          let responseDto: ResponseDto = {
+            status: error.status,
+            body: error.error 
+          };
+          return of(responseDto);
+        })
+      );
+  }
   
+  delete(id:number): Observable<ResponseDto>{
+    return this.http.delete<void>(this.bookingLoanUrl+"/"+id.toString(), {observe: 'response'})
+      .pipe(
+        map((response: HttpResponse<any>) => {
+          let responseDto: ResponseDto = {
+            status: response.status,
+            body: null
+          };
+          return responseDto;
+        }),
+        catchError(error => {
+          let responseDto: ResponseDto = {
+            status: error.status,
+            body: error.error 
+          };
+          return of(responseDto);
+        })
+      );
+  }
 }

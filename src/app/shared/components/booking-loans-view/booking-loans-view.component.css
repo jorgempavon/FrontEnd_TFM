@@ -1,0 +1,27 @@
+th[sortable] {
+  cursor: pointer;
+}
+th[sortable]:hover {
+  background-color: #f0f0f0;
+}
+
+.centered-div{
+  display: flex;
+  justify-content: center;
+}
+
+.minimized-80-div{
+  width: 80%;
+}
+
+.minimized-83-div{
+  width: 83%;
+}
+
+.iconDiv-size{
+  font-size: 1.2 rem;
+}
+
+.centered-text{
+  text-align: center;
+}

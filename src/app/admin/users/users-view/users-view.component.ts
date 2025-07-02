@@ -36,6 +36,8 @@ export class UsersViewComponent {
   modalButtons!:ModalButton[];
 
   editUserUrl:string = 'bibliokie/admin/users/userView/';
+  
+  editListBookingLoansUrl:string = 'bibliokie/admin/bookingLoansView/';
 
   constructor(private userService:UserService,private adminService:AdminService,
     private clientService:ClientService,private spinnerService:SpinnerService,
