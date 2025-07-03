@@ -5,7 +5,7 @@ import { DynamicFormField } from 'src/app/shared/dtos/dynamicFormField';
 import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SpinnerService } from 'src/app/shared/services/spinner.service';
-import { BookCreateDTO } from 'src/app/shared/dtos/bookCreateDTO';
+import { BookCreateDTO } from 'src/app/shared/dtos/books/bookCreateDTO';
 import { BooksService } from '../books.service';
 
 @Component({

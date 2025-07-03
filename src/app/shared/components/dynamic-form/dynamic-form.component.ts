@@ -8,7 +8,7 @@ import { DynamicFormField } from '../../dtos/dynamicFormField';
   styleUrls: ['./dynamic-form.component.css']
 })
 export class DynamicFormComponent implements OnChanges{
-
+  @Input() isVisibleSubmitButton:boolean = true;
   @Input() fields: DynamicFormField[] = [];
   @Input() form!: FormGroup;
   @Input() submitFn!: (formValues: any) => void;

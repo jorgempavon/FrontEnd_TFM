@@ -4,7 +4,7 @@ import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { TokenService } from 'src/app/core/services/token.service';
 import { Router } from '@angular/router';
 import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
-import { RegisterDto } from 'src/app/shared/dtos/registerDto';
+import { RegisterDto } from 'src/app/shared/dtos/users/registerDto';
 import { BodyErrorDto } from '../../shared/dtos/bodyErrorDto';
 import { DynamicFormField } from 'src/app/shared/dtos/dynamicFormField';
 import { ClientSharedService } from 'src/app/shared/services/client-shared.service';

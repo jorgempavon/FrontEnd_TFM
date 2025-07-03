@@ -1,10 +1,10 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environment/environment';
-import { RegisterDto } from '../dtos/registerDto';
+import { RegisterDto } from '../dtos/users/registerDto';
 import { ResponseDto } from '../dtos/reponseDto';
 import { catchError, map, Observable, of } from 'rxjs';
-import { SessionDTO } from '../dtos/sessionDto';
+import { SessionDTO } from '../dtos/users/sessionDto';
 
 @Injectable({
   providedIn: 'root'

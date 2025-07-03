@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DynamicModalComponent } from 'src/app/shared/components/dynamic-modal/dynamic-modal.component';
 import { TableSortableDirective } from 'src/app/shared/directives/table-sortable.directive';
 import { ModalButton } from 'src/app/shared/dtos/modalButtonDto';
-import { RuleDTO } from 'src/app/shared/dtos/ruleDto';
+import { RuleDTO } from 'src/app/shared/dtos/rules/ruleDto';
 import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { BodyErrorDto } from 'src/app/shared/dtos/bodyErrorDto';
 import { ResponseDto } from 'src/app/shared/dtos/reponseDto';

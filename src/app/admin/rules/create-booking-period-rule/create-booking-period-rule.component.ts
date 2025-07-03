@@ -6,7 +6,7 @@ import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { BookingPeriodRuleService } from '../booking-period-rule.service';
 import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
 import { BodyErrorDto } from 'src/app/shared/dtos/bodyErrorDto';
-import { RuleCreateDTO } from 'src/app/shared/dtos/ruleCreateDto';
+import { RuleCreateDTO } from 'src/app/shared/dtos/rules/ruleCreateDto';
 
 @Component({
   selector: 'app-create-booking-period-rule',

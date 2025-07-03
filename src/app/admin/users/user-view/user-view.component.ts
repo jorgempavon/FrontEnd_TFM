@@ -3,11 +3,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DynamicFormField } from 'src/app/shared/dtos/dynamicFormField';
 import { UserService } from '../user.service';
-import { UserAdminUpdateDto } from '../../../shared/dtos/userAdminUpdateDto';
+import { UserAdminUpdateDto } from '../../../shared/dtos/users/userAdminUpdateDto';
 import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
 import { BodyErrorDto } from 'src/app/shared/dtos/bodyErrorDto';
-import { UserDTO } from 'src/app/shared/dtos/userDto';
+import { UserDTO } from 'src/app/shared/dtos/users/userDto';
 
 @Component({
   selector: 'app-user-view',

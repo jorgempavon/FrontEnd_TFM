@@ -2,8 +2,8 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
-import { RuleDTO } from 'src/app/shared/dtos/ruleDto';
-import { RuleUpdateDTO } from 'src/app/shared/dtos/ruleUpdateDto';
+import { RuleDTO } from 'src/app/shared/dtos/rules/ruleDto';
+import { RuleUpdateDTO } from 'src/app/shared/dtos/rules/ruleUpdateDto';
 import { environment } from 'src/environment/environment';
 
 @Injectable({

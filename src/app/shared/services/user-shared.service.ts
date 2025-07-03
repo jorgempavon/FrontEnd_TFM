@@ -1,12 +1,12 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environment/environment';
-import { UserSelfUpdateDTO } from '../dtos/userSelfUpdateDto';
+import { UserSelfUpdateDTO } from '../dtos/users/userSelfUpdateDto';
 import { catchError, map, Observable, of } from 'rxjs';
 import { ResponseDto } from '../dtos/reponseDto';
-import { SessionDTO } from '../dtos/sessionDto';
-import { LoginDto } from '../dtos/loginDto';
-import { UserDTO } from '../dtos/userDto';
+import { SessionDTO } from '../dtos/users/sessionDto';
+import { LoginDto } from '../dtos/users/loginDto';
+import { UserDTO } from '../dtos/users/userDto';
 
 @Injectable({
   providedIn: 'root'
