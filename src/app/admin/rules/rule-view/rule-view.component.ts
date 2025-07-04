@@ -6,8 +6,8 @@ import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { RulesService } from '../rules.service';
 import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
 import { BodyErrorDto } from 'src/app/shared/dtos/bodyErrorDto';
-import { RuleDTO } from 'src/app/shared/dtos/ruleDto';
-import { RuleUpdateDTO } from 'src/app/shared/dtos/ruleUpdateDto';
+import { RuleDTO } from 'src/app/shared/dtos/rules/ruleDto';
+import { RuleUpdateDTO } from 'src/app/shared/dtos/rules/ruleUpdateDto';
 
 @Component({
   selector: 'app-rule-view',

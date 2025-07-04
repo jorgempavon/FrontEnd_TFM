@@ -1,15 +1,17 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DynamicFormField } from 'src/app/shared/dtos/dynamicFormField';
-import { BooksService } from '../books.service';
 import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
 import { BodyErrorDto } from 'src/app/shared/dtos/bodyErrorDto';
-import { BookDTO } from 'src/app/shared/dtos/bookDTO';
-import { BookUpdateDTO } from 'src/app/shared/dtos/bookUpdateDTO';
+import { BookDTO } from 'src/app/shared/dtos/books/bookDTO';
+import { BookUpdateDTO } from 'src/app/shared/dtos/books/bookUpdateDTO';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateBookingLoanViewComponent } from '../../bookingLoans/create-booking-loan-view/create-booking-loan-view.component';
+import { CreateBookingLoanAdminViewComponent } from '../../../admin/bookingLoans/create-booking-loan-admin-view/create-booking-loan-admin-view.component';
+import { CreateBookingLoanClientViewComponent } from '../../../client/bookingLoans/create-booking-loan-client-view/create-booking-loan-client-view.component';
+import { BooksSharedService } from '../../services/books-shared.service';
+import { TokenService } from '../../../core/services/token.service';
 
 @Component({
   selector: 'app-book-view',
@@ -30,15 +32,19 @@ export class BookViewComponent {
   form!:FormGroup;
   id!:number;
   isbnImage!:string;
+  isAdmin!:boolean;
 
   constructor(private fb: FormBuilder,private router:Router,private route: ActivatedRoute, 
-  private booksService:BooksService, private spinnerService:SpinnerService,
-  private dialog: MatDialog) {}
+  private booksSharedService:BooksSharedService, private spinnerService:SpinnerService,
+  private dialog: MatDialog, private tokenService:TokenService) {
+    this.isAdmin = this.tokenService.getIsAdmin();
+
+  }
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if(id == null){
-      this.router.navigate(['bibliokie/admin/books']);
+      this.router.navigate(['']);
       return;
     }
     
@@ -48,7 +54,7 @@ export class BookViewComponent {
 
   getBook():void{
     this.spinnerService.show();
-    this.booksService.findById(this.id).subscribe({
+    this.booksSharedService.findById(this.id).subscribe({
       next: (responseDto) => {
         this.spinnerService.hide();
         this.processGetBookResponse(responseDto)
@@ -69,7 +75,7 @@ export class BookViewComponent {
       releaseDate: values.releaseDate
     };
     this.spinnerService.show();
-    this.booksService.update(this.id,bookUpdateDTO).subscribe({
+    this.booksSharedService.update(this.id,bookUpdateDTO).subscribe({
       next: (responseDto) => {
         this.spinnerService.hide();
         this.processUpdateBookResponse(responseDto)
@@ -88,14 +94,14 @@ export class BookViewComponent {
     }
     let bodyReponse: BookDTO = responseDto.body as BookDTO;
     this.isbnImage = bodyReponse.isbn;
-    
+
     this.form = this.fb.group({
-      isbn: [bodyReponse.isbn],
-      title: [bodyReponse.title],
-      stock: [bodyReponse.stock],
-      genre: [bodyReponse.genre],
-      author: [bodyReponse.author],
-      releaseDate: [bodyReponse.releaseDate]
+      isbn: [{ value:bodyReponse.isbn , disabled: !this.isAdmin }],
+      title: [{ value:bodyReponse.title , disabled: !this.isAdmin }],
+      stock: [{ value:bodyReponse.stock , disabled: !this.isAdmin }],
+      genre: [{ value:bodyReponse.genre , disabled: !this.isAdmin }],
+      author: [{ value:bodyReponse.author , disabled: !this.isAdmin }],
+      releaseDate:[{ value:bodyReponse.releaseDate.toString().substring(0, 10) , disabled: !this.isAdmin }]
     });
   }
 
@@ -114,11 +120,21 @@ export class BookViewComponent {
   }
 
 
-  openCreateBookingLoanModal() {
-    this.dialog.open(CreateBookingLoanViewComponent, {
+  openCreateBookingLoanAdminModal() {
+    this.dialog.open(CreateBookingLoanAdminViewComponent, {
       width: '300px',
       data: {
         bookId: this.id
+      }
+    });
+  }
+
+  openCreateBookingLoanClientModal() {
+    this.dialog.open(CreateBookingLoanClientViewComponent, {
+      width: '300px',
+      data: {
+        bookId: this.id,
+        userId: this.tokenService.getId()
       }
     });
   }

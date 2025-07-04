@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { environment } from 'src/environment/environment';
 import { ResponseDto } from '../dtos/reponseDto';
-import { BookingLoanCreateDTO } from '../dtos/bookingLoanCreateDTO';
-import { BookingLoanDTO } from '../dtos/bookingLoanDTO';
-import { BookingLoanUpdateDTO } from '../dtos/bookingLoanUpdateDTO';
+import { BookingLoanCreateDTO } from '../dtos/bookingLoans/bookingLoanCreateDTO';
+import { BookingLoanDTO } from '../dtos/bookingLoans/bookingLoanDTO';
+import { BookingLoanUpdateDTO } from '../dtos/bookingLoans/bookingLoanUpdateDTO';
 
 @Injectable({
   providedIn: 'root'

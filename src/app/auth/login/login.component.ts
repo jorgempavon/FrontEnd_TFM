@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SpinnerService } from 'src/app/shared/services/spinner.service';
 
-import { LoginDto } from 'src/app/shared/dtos/loginDto';
+import { LoginDto } from 'src/app/shared/dtos/users/loginDto';
 import { TokenService } from '../../core/services/token.service';
 import { Router } from '@angular/router';
 import { ResponseDto } from '../../shared/dtos/reponseDto';
-import { SessionDTO } from '../../shared/dtos/sessionDto';
+import { SessionDTO } from '../../shared/dtos/users/sessionDto';
 import { UserSharedService } from 'src/app/shared/services/user-shared.service';
 import { DynamicFormField } from 'src/app/shared/dtos/dynamicFormField';
 

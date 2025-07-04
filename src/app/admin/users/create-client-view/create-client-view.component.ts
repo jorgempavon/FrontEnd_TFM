@@ -3,7 +3,7 @@ import { DynamicFormField } from 'src/app/shared/dtos/dynamicFormField';
 import { ClientService } from '../client.service';
 import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserCreateDTO } from 'src/app/shared/dtos/userCreateDto';
+import { UserCreateDTO } from 'src/app/shared/dtos/users/userCreateDto';
 import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
 import { BodyErrorDto } from 'src/app/shared/dtos/bodyErrorDto';
 import { MatDialogRef } from '@angular/material/dialog';

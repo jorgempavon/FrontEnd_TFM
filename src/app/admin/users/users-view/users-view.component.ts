@@ -1,7 +1,7 @@
 import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { TableSortableDirective } from 'src/app/shared/directives/table-sortable.directive';
 import { SortEvent } from 'src/app/shared/dtos/shortDto';
-import { UserDTO } from 'src/app/shared/dtos/userDto';
+import { UserDTO } from 'src/app/shared/dtos/users/userDto';
 import { UserService } from '../user.service';
 import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
@@ -38,7 +38,9 @@ export class UsersViewComponent {
   editUserUrl:string = 'bibliokie/admin/users/userView/';
   
   editListBookingLoansUrl:string = 'bibliokie/admin/bookingLoansView/';
+  editListPenaltiesUrl:string = 'bibliokie/admin/penaltiesView/';
 
+  
   constructor(private userService:UserService,private adminService:AdminService,
     private clientService:ClientService,private spinnerService:SpinnerService,
     private dialog:MatDialog) {

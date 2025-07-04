@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
-import { UserDTO } from 'src/app/shared/dtos/userDto';
+import { UserDTO } from 'src/app/shared/dtos/users/userDto';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from 'src/environment/environment';
-import { UserCreateDTO } from 'src/app/shared/dtos/userCreateDto';
-import { UserAdminUpdateDto } from 'src/app/shared/dtos/userAdminUpdateDto';
+import { UserCreateDTO } from 'src/app/shared/dtos/users/userCreateDto';
+import { UserAdminUpdateDto } from 'src/app/shared/dtos/users/userAdminUpdateDto';
 import { UserSharedService } from 'src/app/shared/services/user-shared.service';
 
 @Injectable({

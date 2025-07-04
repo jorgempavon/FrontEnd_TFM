@@ -3,20 +3,20 @@ import {  FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { map, Observable, startWith } from 'rxjs';
 import { DynamicFormField } from 'src/app/shared/dtos/dynamicFormField';
-import { UserDTO } from 'src/app/shared/dtos/userDto';
+import { UserDTO } from 'src/app/shared/dtos/users/userDto';
 import { UserService } from '../../users/user.service';
 import { SpinnerService } from '../../../shared/services/spinner.service';
 import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
 import { BodyErrorDto } from 'src/app/shared/dtos/bodyErrorDto';
 import { BookingLoanService } from 'src/app/shared/services/booking-loan.service';
-import { BookingLoanCreateDTO } from '../../../shared/dtos/bookingLoanCreateDTO';
+import { BookingLoanCreateDTO } from '../../../shared/dtos/bookingLoans/bookingLoanCreateDTO';
 
 @Component({
-  selector: 'app-create-booking-loan-view',
-  templateUrl: './create-booking-loan-view.component.html',
-  styleUrls: ['./create-booking-loan-view.component.css']
+  selector: 'app-create-booking-loan-admin-view',
+  templateUrl: './create-booking-loan-admin-view.component.html',
+  styleUrls: ['./create-booking-loan-admin-view.component.css']
 })
-export class CreateBookingLoanViewComponent {
+export class CreateBookingLoanAdminViewComponent {
   fields: DynamicFormField[] = [];
   form!: FormGroup;
   errorMessage:string = '';
@@ -27,7 +27,7 @@ export class CreateBookingLoanViewComponent {
   filteredUsers!: Observable<UserDTO[]>;
 
   constructor(private spinnerService:SpinnerService,private userService:UserService,private bookingLoanService:BookingLoanService,
-    private dialogRef: MatDialogRef<CreateBookingLoanViewComponent>,@Inject(MAT_DIALOG_DATA) public data: any){}
+    private dialogRef: MatDialogRef<CreateBookingLoanAdminViewComponent>,@Inject(MAT_DIALOG_DATA) public data: any){}
 
   ngOnInit() {
     this.bookId = this.data.bookId;
@@ -115,6 +115,10 @@ export class CreateBookingLoanViewComponent {
       this.errorMessage = bodyErrorDto.message;
       return;
     }
+    this.form = new FormGroup({
+      user: new FormControl(null, Validators.required),
+      beginDate: new FormControl(null, Validators.required),
+    });
     this.successMessage = 'Reserva creada correctamente';
   }
 

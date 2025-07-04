@@ -16,7 +16,7 @@ export class ClientComponent {
     this.listNavs = [
       { title: 'Libros', href: this.clientUrl+'/books', text: 'Libros', isActive:false},
       { title: 'Eventos', href: this.clientUrl+'/events', text: 'Eventos', isActive:false},
-      { title: 'Mis penalizaciones', href: this.clientUrl+'/penalties', text: 'Penalizaciones', isActive:false},
+      { title: 'Mis penalizaciones', href: this.clientUrl+'/penaltiesView/'+ this.tokenService.getId(), text: 'Penalizaciones', isActive:false},
       { title: 'Mis reservas', href: this.clientUrl+'/bookingLoansView/'+ this.tokenService.getId(), text: 'Reservas', isActive:false},
     ];
   }

@@ -1,13 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
-import { BookDTO } from 'src/app/shared/dtos/bookDTO';
+import { BookDTO } from 'src/app/shared/dtos/books/bookDTO';
 import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
 import { BodyErrorDto } from 'src/app/shared/dtos/bodyErrorDto';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateBookViewComponent } from '../create-book-view/create-book-view.component';
-import { BooksService } from '../books.service';
+import { CreateBookViewComponent } from '../../../admin/books/create-book-view/create-book-view.component';
 import { DynamicModalComponent } from 'src/app/shared/components/dynamic-modal/dynamic-modal.component';
 import { ModalButton } from 'src/app/shared/dtos/modalButtonDto';
+import { TokenService } from '../../../core/services/token.service';
+import { BooksSharedService } from '../../services/books-shared.service';
 
 @Component({
   selector: 'app-booksview',
@@ -20,19 +21,24 @@ export class BooksViewComponent {
   filterAuthor!: string;
   filterIsbn!: string;
   filterGenre!: string;
-  
+  isAdmin!:boolean;
+  editBookUrl:string = '/bibliokie/client/books/bookview/';
   @ViewChild(DynamicModalComponent) deleteModal!:DynamicModalComponent;
   modalTitle:string = 'Eliminar libro';
   modalBody!:string;
   modalButtons!:ModalButton[];
 
-  constructor(private spinnerService: SpinnerService,private booksService:BooksService,
-    private dialog:MatDialog
+  constructor(private spinnerService: SpinnerService,private booksSharedService:BooksSharedService,
+    private dialog:MatDialog, private tokenService:TokenService
   ){
     this.filterTitle = '';
     this.filterAuthor = '';
     this.filterIsbn = '';
     this.filterGenre = '';
+    this.isAdmin = this.tokenService.getIsAdmin();
+    if(this.isAdmin){
+      this.editBookUrl='/bibliokie/admin/books/bookview/';
+    }
   }
   
   ngOnInit(): void{
@@ -41,7 +47,7 @@ export class BooksViewComponent {
 
   getBooksList():void{
     this.spinnerService.show();
-	  this.booksService.findByTitleAndAuthorAndIsbnAndGenre(this.filterTitle,this.filterAuthor
+	  this.booksSharedService.findByTitleAndAuthorAndIsbnAndGenre(this.filterTitle,this.filterAuthor
       ,this.filterIsbn,this.filterGenre).subscribe({
       next: (responseDto) => {
         this.spinnerService.hide();
@@ -70,7 +76,7 @@ export class BooksViewComponent {
 
   deleteBook(id:number):void{
     this.spinnerService.show();
-    this.booksService.delete(id).subscribe({
+    this.booksSharedService.delete(id).subscribe({
       next: () => {
         this.spinnerService.hide();
         this.getBooksList();

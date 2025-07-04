@@ -2,8 +2,8 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
-import { RuleCreateDTO } from 'src/app/shared/dtos/ruleCreateDto';
-import { RuleDTO } from 'src/app/shared/dtos/ruleDto';
+import { RuleCreateDTO } from 'src/app/shared/dtos/rules/ruleCreateDto';
+import { RuleDTO } from 'src/app/shared/dtos/rules/ruleDto';
 import { environment } from 'src/environment/environment';
 
 @Injectable({
@@ -11,7 +11,7 @@ import { environment } from 'src/environment/environment';
 })
 export class TemporaryPeriodRuleService {
 
-  private temporaryRuleUrl = environment.apiBaseUrl + '/rules/bookingPeriodRule';
+  private temporaryRuleUrl = environment.apiBaseUrl + '/rules/temporaryPeriodRule';
 
   constructor(private http: HttpClient ) { }
 

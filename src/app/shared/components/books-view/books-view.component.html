@@ -19,7 +19,7 @@
 		</div>
 		
 	</div>
-	<div class="row mt-4  minimized-80-div">
+	<div *ngIf="isAdmin" class="row mt-4  minimized-80-div">
 		<div class="col-2">
 			<button (click)="openCreateBookModal()" class="btn btn-primary"><i class="bi bi-book"></i> Añadir libro</button>
 		</div>
@@ -39,8 +39,8 @@
           <p class="card-text">{{ book.stock }} unidades disponibles </p>
           <p class="card-text text-muted">{{ book.genre}}...</p>
           <div class="mt-auto">
-            <a [attr.href]="'/bibliokie/admin/books/bookview/' + book.id"  class="btn btn-primary w-100 mb-1">Ver detalles</a>
-			 <button class="btn btn-danger w-100 mb-1" (click)="openDeleteModal(book.id,book.title,book.author)">Eliminar libro</button>
+            <a [attr.href]="editBookUrl + book.id"  class="btn btn-primary w-100 mb-1">Ver detalles</a>
+			<button *ngIf="isAdmin" class="btn btn-danger w-100 mb-1" (click)="openDeleteModal(book.id,book.title,book.author)">Eliminar libro</button>
           </div>
         </div>
       </div>

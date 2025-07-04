@@ -2,8 +2,8 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
-import { UserCreateDTO } from 'src/app/shared/dtos/userCreateDto';
-import { UserDTO } from 'src/app/shared/dtos/userDto';
+import { UserCreateDTO } from 'src/app/shared/dtos/users/userCreateDto';
+import { UserDTO } from 'src/app/shared/dtos/users/userDto';
 import { environment } from 'src/environment/environment';
 
 @Injectable({

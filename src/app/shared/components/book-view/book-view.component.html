@@ -5,11 +5,12 @@
     <div class="col-6">
       <div class="card h-800">
         <img [src]="'https://covers.openlibrary.org/b/isbn/' +  isbnImage + '-L.jpg'" alt="Portada del libro" />
-        <button class="mt-2 btn btn-warning" (click)="openCreateBookingLoanModal()">Crear reserva</button>
+        <button *ngIf="isAdmin" class="mt-2 btn btn-warning" (click)="openCreateBookingLoanAdminModal()">Crear reserva</button>
       </div>
     </div>
     <div class="col-6">
-      <h2>Editar libro </h2>
+      <h2 *ngIf="isAdmin" >Editar libro </h2>
+      <h2 *ngIf="isAdmin" >Detalles libro </h2>
       <app-dynamic-form
         [fields]="fields"
         [errorMessage]="errorMessage"
@@ -17,9 +18,10 @@
         [form]="form"
         [submitFn]="updateBook.bind(this)"
         (formTouched)="deleteMessages()"
+        [isVisibleSubmitButton]="isAdmin"
         submitButtonText="Modificar libro">
       </app-dynamic-form>
-      
+      <button *ngIf="!isAdmin" class="mt-2 btn btn-warning w-100 py-2 " (click)="openCreateBookingLoanClientModal()">Crear reserva</button>
     </div>
   </div>
 

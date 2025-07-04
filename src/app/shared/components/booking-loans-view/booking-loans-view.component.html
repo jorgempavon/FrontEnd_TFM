@@ -1,6 +1,6 @@
 <div class="row mt-4 centered-div" >
 	<div *ngIf="isAdmin"  class="row minimized-83-div">
-		<div class="col-2">
+		<div class="col-3">
 			<label for="userSelect">Usuario</label>
 			<select disabled class="form-select" name="userSelect" id="userSelect">
                 <option [ngValue]="userId">{{ userName }}</option>
@@ -65,8 +65,11 @@
 				</td>
 			</tr>
 			<tr *ngIf="pagedListBookingLoans.length == 0">
-				<td colspan="7" class="centered-text">
-					No se ha encontrado ninguna reserva para el usuario {{userName}}
+				<td *ngIf="isAdmin" colspan="7" class="centered-text">
+					No se hay ninguna reserva del usuario {{userName}}
+				</td>
+				<td *ngIf="!isAdmin" colspan="7" class="centered-text">
+					No has realizado ninguna reserva hasta el momento
 				</td>
 			</tr>
 		</tbody>

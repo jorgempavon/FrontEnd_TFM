@@ -5,10 +5,10 @@ import { TokenService } from 'src/app/core/services/token.service';
 import { Router } from '@angular/router';
 import { BodyErrorDto } from '../../dtos/bodyErrorDto';
 import { ResponseDto } from '../../dtos/reponseDto';
-import { UserSelfUpdateDTO } from '../../dtos/userSelfUpdateDto';
+import { UserSelfUpdateDTO } from '../../dtos/users/userSelfUpdateDto';
 import { DynamicFormField } from '../../dtos/dynamicFormField';
 import { UserSharedService } from '../../services/user-shared.service';
-import { UserDTO } from '../../dtos/userDto';
+import { UserDTO } from '../../dtos/users/userDto';
 
 @Component({
   selector: 'app-profile',
