@@ -11,6 +11,9 @@ import { DynamicModalComponent } from './components/dynamic-modal/dynamic-modal.
 import { BookingLoansViewComponent } from './components/booking-loans-view/booking-loans-view.component';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { TableSortableDirective } from './directives/table-sortable.directive';
+import { PenaltiesViewComponent } from './components/penalties-view/penalties-view.component';
+import { BookingPeriodPenaltyViewComponent } from './components/booking-period-penalty-view/booking-period-penalty-view.component';
+import { TemporaryPeriodPenaltyViewComponent } from './components/temporary-period-penalty-view/temporary-period-penalty-view.component';
 
 
 @NgModule({
@@ -21,7 +24,10 @@ import { TableSortableDirective } from './directives/table-sortable.directive';
     ProfileComponent,
     DynamicFormComponent,
     DynamicModalComponent,
-    BookingLoansViewComponent
+    BookingLoansViewComponent,
+    PenaltiesViewComponent,
+    BookingPeriodPenaltyViewComponent,
+    TemporaryPeriodPenaltyViewComponent
   ],
   exports: [
     HeaderComponent,

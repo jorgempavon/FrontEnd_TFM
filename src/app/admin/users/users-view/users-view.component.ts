@@ -38,7 +38,9 @@ export class UsersViewComponent {
   editUserUrl:string = 'bibliokie/admin/users/userView/';
   
   editListBookingLoansUrl:string = 'bibliokie/admin/bookingLoansView/';
+  editListPenaltiesUrl:string = 'bibliokie/admin/penaltiesView/';
 
+  
   constructor(private userService:UserService,private adminService:AdminService,
     private clientService:ClientService,private spinnerService:SpinnerService,
     private dialog:MatDialog) {

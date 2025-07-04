@@ -1,42 +1,21 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
-import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
-import { RuleCreateDTO } from 'src/app/shared/dtos/rules/ruleCreateDto';
-import { RuleDTO } from 'src/app/shared/dtos/rules/ruleDto';
 import { environment } from 'src/environment/environment';
+import { ResponseDto } from '../dtos/reponseDto';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TemporaryPeriodRuleService {
+export class BookingPeriodPenaltyService {
 
-  private temporaryRuleUrl = environment.apiBaseUrl + '/rules/temporaryPeriodRule';
+  private bookingPeriodUrl = environment.apiBaseUrl + '/penalties/bookingPeriodPenalties';
 
-  constructor(private http: HttpClient ) { }
+  constructor(private http:HttpClient) { }
 
-  create(userCreateDTO:RuleCreateDTO): Observable<ResponseDto>{
-    return this.http.post<RuleDTO>(this.temporaryRuleUrl,userCreateDTO, {observe: 'response'})
-      .pipe(
-        map((response: HttpResponse<any>) => {
-          let responseDto: ResponseDto = {
-            status: response.status,
-            body: response.body
-          };
-          return responseDto;
-        }),
-        catchError(error => {
-          let responseDto: ResponseDto = {
-            status: error.status,
-            body: error.error 
-          };
-          return of(responseDto);
-        })
-      );
-  }
-  
+    
   delete(id:number): Observable<ResponseDto>{
-    return this.http.delete<void>(this.temporaryRuleUrl+"/"+id.toString(), {observe: 'response'})
+    return this.http.delete<void>(this.bookingPeriodUrl+"/"+id.toString(), {observe: 'response'})
       .pipe(
         map((response: HttpResponse<any>) => {
           let responseDto: ResponseDto = {
@@ -54,4 +33,25 @@ export class TemporaryPeriodRuleService {
         })
       );
   }
+
+  findById(id:number): Observable<ResponseDto>{
+    return this.http.get<void>(this.bookingPeriodUrl+"/"+id.toString(), {observe: 'response'})
+      .pipe(
+        map((response: HttpResponse<any>) => {
+          let responseDto: ResponseDto = {
+            status: response.status,
+            body: response.body
+          };
+          return responseDto;
+        }),
+        catchError(error => {
+          let responseDto: ResponseDto = {
+            status: error.status,
+            body: error.error 
+          };
+          return of(responseDto);
+        })
+      );
+  }
+
 }

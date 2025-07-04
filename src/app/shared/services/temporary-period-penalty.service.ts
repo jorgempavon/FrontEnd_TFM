@@ -1,27 +1,25 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of } from 'rxjs';
-import { ResponseDto } from 'src/app/shared/dtos/reponseDto';
-import { RuleCreateDTO } from 'src/app/shared/dtos/rules/ruleCreateDto';
-import { RuleDTO } from 'src/app/shared/dtos/rules/ruleDto';
 import { environment } from 'src/environment/environment';
+import { ResponseDto } from '../dtos/reponseDto';
+import { catchError, map, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TemporaryPeriodRuleService {
+export class TemporaryPeriodPenaltyService {
+  
+  private temporaryPeriodUrl = environment.apiBaseUrl + '/penalties/temporaryPeriodPenalties';
 
-  private temporaryRuleUrl = environment.apiBaseUrl + '/rules/temporaryPeriodRule';
+  constructor(private http:HttpClient) { }
 
-  constructor(private http: HttpClient ) { }
-
-  create(userCreateDTO:RuleCreateDTO): Observable<ResponseDto>{
-    return this.http.post<RuleDTO>(this.temporaryRuleUrl,userCreateDTO, {observe: 'response'})
+  delete(id:number): Observable<ResponseDto>{
+    return this.http.delete<void>(this.temporaryPeriodUrl+"/"+id.toString(), {observe: 'response'})
       .pipe(
         map((response: HttpResponse<any>) => {
           let responseDto: ResponseDto = {
             status: response.status,
-            body: response.body
+            body: null
           };
           return responseDto;
         }),
@@ -34,14 +32,15 @@ export class TemporaryPeriodRuleService {
         })
       );
   }
+
   
-  delete(id:number): Observable<ResponseDto>{
-    return this.http.delete<void>(this.temporaryRuleUrl+"/"+id.toString(), {observe: 'response'})
+  findById(id:number): Observable<ResponseDto>{
+    return this.http.get<void>(this.temporaryPeriodUrl+"/"+id.toString(), {observe: 'response'})
       .pipe(
         map((response: HttpResponse<any>) => {
           let responseDto: ResponseDto = {
             status: response.status,
-            body: null
+            body: response.body
           };
           return responseDto;
         }),
